@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Avito & Maps AI Outreach</title>
+  <title>AI Outreach CRM (Авито + Яндекс Карты)</title>
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-color: var(--tg-theme-bg-color, #0f172a);
+      --bg-color: var(--tg-theme-bg-color, #0b1120);
       --secondary-bg: var(--tg-theme-secondary-bg-color, #1e293b);
       --text-color: var(--tg-theme-text-color, #f8fafc);
       --hint-color: var(--tg-theme-hint-color, #94a3b8);
@@ -38,7 +38,7 @@
       color: var(--text-color);
       font-size: 14px;
       line-height: 1.5;
-      padding-bottom: 80px;
+      padding-bottom: 85px;
       min-height: 100vh;
       overflow-x: hidden;
     }
@@ -49,7 +49,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--card-border);
-      padding: 14px 16px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -73,18 +73,24 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
     }
 
     .brand-title {
       font-weight: 700;
-      font-size: 16px;
+      font-size: 15px;
       letter-spacing: -0.3px;
     }
 
     .brand-subtitle {
       font-size: 11px;
       color: var(--hint-color);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .status-badge {
@@ -94,9 +100,9 @@
       background: rgba(16, 185, 129, 0.15);
       border: 1px solid rgba(16, 185, 129, 0.3);
       color: #34d399;
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
     }
 
@@ -141,25 +147,25 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 18px;
-      margin-bottom: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
 
     .card-title {
       font-size: 15px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
     }
 
     /* GOAL HERO */
     .goal-hero {
       background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
-      border: 1px solid rgba(139, 92, 246, 0.3);
+      border: 1px solid rgba(139, 92, 246, 0.35);
       position: relative;
       overflow: hidden;
     }
@@ -168,11 +174,11 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .goal-number {
-      font-size: 40px;
+      font-size: 38px;
       font-weight: 800;
       letter-spacing: -1px;
       background: var(--accent-grad);
@@ -182,7 +188,7 @@
     }
 
     .goal-target {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--hint-color);
       font-weight: 500;
     }
@@ -192,7 +198,7 @@
       height: 12px;
       border-radius: 6px;
       overflow: hidden;
-      margin: 12px 0 14px;
+      margin: 10px 0 12px;
       position: relative;
     }
 
@@ -208,33 +214,33 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 14px;
+      margin-top: 12px;
     }
 
     .sub-stat {
       background: rgba(0, 0, 0, 0.25);
       border-radius: 10px;
-      padding: 10px;
+      padding: 8px;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .sub-stat-num {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       color: #fff;
     }
 
     .sub-stat-label {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--hint-color);
       margin-top: 2px;
     }
 
     .btn-row {
       display: flex;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 8px;
+      margin-top: 12px;
     }
 
     /* BUTTONS */
@@ -242,18 +248,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       background: var(--button-color);
       color: var(--button-text);
       border: none;
       border-radius: 12px;
-      padding: 12px 18px;
-      font-size: 14px;
+      padding: 11px 16px;
+      font-size: 13.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       text-decoration: none;
       width: 100%;
+      text-align: center;
     }
 
     .btn:active {
@@ -277,8 +284,14 @@
       color: #fff;
     }
 
+    .btn-danger {
+      background: #ef4444;
+      color: #fff;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
     .btn-sm {
-      padding: 8px 12px;
+      padding: 7px 12px;
       font-size: 12px;
       border-radius: 8px;
     }
@@ -295,10 +308,10 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 12px 10px;
+      padding: 10px 8px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
       user-select: none;
@@ -307,7 +320,7 @@
     .niche-chip.selected {
       background: rgba(59, 130, 246, 0.2);
       border-color: #3b82f6;
-      box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
     }
 
     .niche-checkbox {
@@ -318,8 +331,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 11px;
       transition: all 0.2s;
+      flex-shrink: 0;
     }
 
     .niche-chip.selected .niche-checkbox {
@@ -329,9 +343,10 @@
     }
 
     .niche-text {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       flex: 1;
+      line-height: 1.3;
     }
 
     /* LEADS LIST */
@@ -339,15 +354,15 @@
       background: rgba(30, 41, 59, 0.85);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 14px;
+      padding: 15px;
+      margin-bottom: 12px;
       position: relative;
       transition: transform 0.2s;
     }
 
     .lead-card.contacted {
       border-color: rgba(16, 185, 129, 0.4);
-      background: rgba(16, 185, 129, 0.05);
+      background: rgba(16, 185, 129, 0.06);
     }
 
     .lead-top {
@@ -355,19 +370,28 @@
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 6px;
+      gap: 8px;
     }
 
     .lead-name {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: #fff;
+      line-height: 1.3;
+    }
+
+    .lead-badges {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
     }
 
     .lead-badge {
-      font-size: 11px;
-      padding: 3px 8px;
+      font-size: 10.5px;
+      padding: 2px 7px;
       border-radius: 6px;
       font-weight: 600;
+      white-space: nowrap;
     }
 
     .badge-pending {
@@ -382,33 +406,39 @@
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
+    .badge-type {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
     .lead-meta {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--hint-color);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .lead-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       margin-top: 10px;
     }
 
     .btn-action {
       flex: 1;
-      min-width: 120px;
-      padding: 8px 12px;
+      min-width: 100px;
+      padding: 7px 10px;
       border-radius: 8px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       text-decoration: none;
       cursor: pointer;
     }
@@ -417,14 +447,15 @@
     .btn-wa { background: #25d366; color: #fff; }
     .btn-vk { background: #4a76a8; color: #fff; }
     .btn-map { background: #fc3f1d; color: #fff; }
+    .btn-phone { background: #475569; color: #fff; }
 
     /* OFFER ACCORDION */
     .offer-box {
       background: rgba(0, 0, 0, 0.3);
       border-left: 3px solid #3b82f6;
       border-radius: 0 8px 8px 0;
-      padding: 10px 12px;
-      margin: 12px 0 8px;
+      padding: 9px 11px;
+      margin: 10px 0 6px;
       font-size: 12px;
       line-height: 1.5;
       color: #e2e8f0;
@@ -434,7 +465,7 @@
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: #fff;
-      padding: 6px 10px;
+      padding: 5px 9px;
       border-radius: 6px;
       font-size: 11px;
       cursor: pointer;
@@ -455,13 +486,13 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(11, 17, 32, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid var(--card-border);
       display: flex;
       justify-content: space-around;
-      padding: 8px 6px;
+      padding: 6px 4px;
       z-index: 100;
     }
 
@@ -469,13 +500,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
       color: var(--hint-color);
       text-decoration: none;
       font-size: 10px;
       font-weight: 600;
       cursor: pointer;
-      padding: 4px 8px;
+      padding: 4px 6px;
       border-radius: 10px;
       transition: all 0.2s;
       flex: 1;
@@ -484,11 +515,11 @@
 
     .nav-item.active {
       color: #38bdf8;
-      background: rgba(56, 189, 248, 0.1);
+      background: rgba(56, 189, 248, 0.12);
     }
 
     .nav-icon {
-      font-size: 20px;
+      font-size: 19px;
     }
 
     /* TOAST */
@@ -500,9 +531,9 @@
       background: #1e293b;
       color: #fff;
       border: 1px solid var(--card-border);
-      padding: 10px 18px;
+      padding: 9px 16px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 500;
       opacity: 0;
       pointer-events: none;
@@ -511,7 +542,9 @@
       z-index: 1000;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
+      max-width: 90%;
+      text-align: center;
     }
 
     .toast.show {
@@ -521,14 +554,14 @@
 
     /* INPUTS */
     .input-group {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .input-label {
       display: block;
       font-size: 12px;
       color: var(--hint-color);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       font-weight: 600;
     }
 
@@ -539,7 +572,7 @@
       border-radius: 10px;
       padding: 10px 12px;
       color: #fff;
-      font-size: 14px;
+      font-size: 13.5px;
       outline: none;
     }
 
@@ -564,12 +597,13 @@
     .pill {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--card-border);
-      padding: 6px 12px;
+      padding: 5px 11px;
       border-radius: 16px;
-      font-size: 12px;
+      font-size: 11.5px;
       white-space: nowrap;
       cursor: pointer;
       color: var(--hint-color);
+      transition: all 0.2s;
     }
 
     .pill.active {
@@ -583,8 +617,8 @@
       border: 2px solid rgba(255, 255, 255, 0.1);
       border-left-color: #3b82f6;
       border-radius: 50%;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       animation: spin 0.8s linear infinite;
       display: inline-block;
     }
@@ -606,9 +640,14 @@
         <div class="brand-subtitle" id="user-greeting">Avito & Yandex Maps Bot</div>
       </div>
     </div>
-    <div class="status-badge">
-      <div class="status-dot"></div>
-      <span>Бот активен</span>
+    <div class="header-actions">
+      <button class="btn btn-sm btn-danger" style="width: auto; padding: 5px 10px; font-weight: 700;" onclick="stopCurrentSearch()">
+        🛑 Стоп
+      </button>
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>Онлайн</span>
+      </div>
     </div>
   </header>
 
@@ -620,8 +659,8 @@
       <div class="card goal-hero">
         <div class="goal-header">
           <div>
-            <div style="font-size: 13px; color: var(--hint-color); font-weight: 600; text-transform: uppercase;">План на сегодня</div>
-            <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 4px;">
+            <div style="font-size: 12px; color: var(--hint-color); font-weight: 600; text-transform: uppercase;">Суточный план</div>
+            <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 3px;">
               <span class="goal-number" id="goal-today">0</span>
               <span class="goal-target">/ 50 сообщений</span>
             </div>
@@ -633,7 +672,7 @@
           <div id="goal-progress-fill" class="progress-bar-fill" style="width: 0%;"></div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--hint-color);">
+        <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--hint-color);">
           <span id="goal-percent-text">Выполнено: 0%</span>
           <span id="goal-remaining-text">Осталось: 50</span>
         </div>
@@ -657,38 +696,81 @@
           <button class="btn btn-accent" onclick="adjustManualOutreach(1)">
             ➕ Отправил сообщение (+1)
           </button>
-          <button class="btn btn-secondary" style="width: 70px;" onclick="adjustManualOutreach(-1)">
+          <button class="btn btn-secondary" style="width: 65px;" onclick="adjustManualOutreach(-1)">
             ➖
           </button>
+        </div>
+      </div>
+
+      <!-- АВТОПАРСИНГ ПО РАСПИСАНИЮ -->
+      <div class="card">
+        <div class="card-title">
+          <span>🔄 Автопарсинг (ротация раз в 60 мин)</span>
+          <span id="sched-badge" class="lead-badge badge-pending">⚪ Выключен</span>
+        </div>
+        <div style="font-size: 12px; color: var(--hint-color); margin-bottom: 12px;">
+          Бот автоматически каждый час меняет сферу бизнеса (поочередно обходит все ниши), ищет свежих клиентов и рассылает офферы.
+        </div>
+        <div class="btn-row" style="margin-top: 0;">
+          <button class="btn btn-accent btn-sm" id="btn-sched-start" onclick="toggleScheduler(true)">
+            ▶️ Запустить автопарсинг
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-sched-stop" onclick="toggleScheduler(false)">
+            ⏹ Остановить
+          </button>
+        </div>
+      </div>
+
+      <!-- ЭКСПОРТ И ОТПРАВКА ФАЙЛОВ -->
+      <div class="card">
+        <div class="card-title">📁 Экспорт и файлы лидов</div>
+        <div style="font-size: 12px; color: var(--hint-color); margin-bottom: 12px;">
+          Все контакты сохраняются в базу SQLite и текстовые файлы. Выгрузите их в чат или скачайте напрямую:
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn btn-accent btn-sm" onclick="sendExportToTelegram()">
+            📨 Отправить файлы прямо в чат Telegram
+          </button>
+          <div style="display: flex; gap: 8px;">
+            <a class="btn btn-secondary btn-sm" href="leads.json" download="leads.json" style="flex: 1;">
+              📥 Скачать JSON
+            </a>
+            <button class="btn btn-secondary btn-sm" onclick="exportLeadsCsv()" style="flex: 1;">
+              📊 Экспорт в Excel (CSV)
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- ИСТОРИЯ И СТАТИСТИКА -->
       <div class="card">
         <div class="card-title">📊 Общая статистика</div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+        <div style="display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--card-border);">
           <span style="color: var(--hint-color);">Вчера отправлено:</span>
           <b id="stat-yesterday">0</b>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+        <div style="display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--card-border);">
           <span style="color: var(--hint-color);">Всего за всё время:</span>
           <b id="stat-all-time">0</b>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0;">
-          <span style="color: var(--hint-color);">Всего в базе лидов:</span>
+        <div style="display: flex; justify-content: space-between; padding: 7px 0;">
+          <span style="color: var(--hint-color);">Всего лидов в базе:</span>
           <b id="stat-total-leads">0</b>
         </div>
       </div>
 
       <!-- БЫСТРЫЕ ДЕЙСТВИЯ -->
       <div class="card">
-        <div class="card-title">⚡ Быстрый старт</div>
+        <div class="card-title">⚡ Быстрый запуск</div>
         <div style="display: flex; flex-direction: column; gap: 8px;">
           <button class="btn btn-secondary" onclick="switchTab('tab-maps')">
-            🗺 Найти салоны и бизнес на Яндекс Картах
+            🗺 Найти бизнес и салоны на Яндекс Картах
+          </button>
+          <button class="btn btn-secondary" onclick="switchTab('tab-avito')">
+            ⚡ Запустить автоотклики на Авито
           </button>
           <button class="btn btn-secondary" onclick="switchTab('tab-leads')">
-            📋 Открыть базу собранных лидов и оферов
+            📋 Открыть базу лидов и готовых офферов
           </button>
         </div>
       </div>
@@ -698,13 +780,13 @@
     <div id="tab-maps" class="tab-content">
       <div class="card">
         <div class="card-title">🗺 Поиск бизнеса на Яндекс Картах</div>
-        <div style="font-size: 13px; color: var(--hint-color); margin-bottom: 12px;">
-          Бот находит реальные компании в Москве, извлекает прямые <b>Telegram, WhatsApp, VK, телефоны</b> и пишет оффер с расчётом окупаемости.
+        <div style="font-size: 12.5px; color: var(--hint-color); margin-bottom: 12px;">
+          Бот находит реальные организации, извлекает <b>Telegram, WhatsApp, VK, телефоны</b> и рассчитывает финансовую выгоду внедрения ИИ.
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span style="font-size: 12px; font-weight: 600; color: var(--hint-color);">ВЫБЕРИТЕ НАПРАВЛЕНИЯ:</span>
-          <div style="display: flex; gap: 6px;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--hint-color); text-transform: uppercase;">ВЫБЕРИТЕ СФЕРЫ (МУЛЬТИ-ПОИСК):</span>
+          <div style="display: flex; gap: 5px;">
             <button class="btn btn-secondary btn-sm" onclick="selectAllNiches(true)">Все (12)</button>
             <button class="btn btn-secondary btn-sm" onclick="selectAllNiches(false)">Сброс</button>
           </div>
@@ -715,7 +797,7 @@
         </div>
 
         <div class="input-group">
-          <label class="input-label">Лимит на каждую нишу:</label>
+          <label class="input-label">Лимит организаций на каждую нишу:</label>
           <select id="maps-limit" class="input-control">
             <option value="3">3 компании на нишу</option>
             <option value="5" selected>5 компаний на нишу</option>
@@ -724,27 +806,27 @@
         </div>
 
         <div class="input-group">
-          <label class="input-label">Или свой поисковый запрос (город / ниша):</label>
-          <input type="text" id="maps-custom-query" class="input-control" placeholder="Например: барбершоп Москва">
+          <label class="input-label">Или произвольный запрос (город / ниша):</label>
+          <input type="text" id="maps-custom-query" class="input-control" placeholder="Например: барбершоп Москва или клиника Сочи">
         </div>
 
         <div style="display: flex; gap: 8px;">
           <button class="btn btn-accent" id="btn-start-maps" onclick="startMapsSearch()" style="flex: 2;">
             🚀 Запустить поиск на Картах
           </button>
-          <button class="btn btn-danger" id="btn-stop-maps" onclick="stopCurrentSearch()" style="flex: 1; background: #ef4444; color: #fff; font-weight: 700; border: 1px solid rgba(239, 68, 68, 0.4);">
+          <button class="btn btn-danger" onclick="stopCurrentSearch()" style="flex: 1;">
             🛑 Стоп
           </button>
         </div>
 
-        <div id="maps-search-status" style="display: none; margin-top: 14px; padding: 12px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; font-size: 13px;">
+        <div id="maps-search-status" style="display: none; margin-top: 14px; padding: 12px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; font-size: 12.5px;">
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <span class="spinner"></span>
-              <span id="maps-status-text">Инициализация поиска...</span>
+              <span id="maps-status-text">Запуск поиска...</span>
             </div>
-            <button class="btn btn-sm" style="width: auto; background: #ef4444; color: #fff; padding: 4px 10px;" onclick="stopCurrentSearch()">
-              🛑 Остановить
+            <button class="btn btn-sm btn-danger" style="width: auto; padding: 3px 8px;" onclick="stopCurrentSearch()">
+              🛑
             </button>
           </div>
         </div>
@@ -755,8 +837,8 @@
     <div id="tab-avito" class="tab-content">
       <div class="card">
         <div class="card-title">⚡ Автоотклики на Авито</div>
-        <div style="font-size: 13px; color: var(--hint-color); margin-bottom: 12px;">
-          Бот находит свежие услуги или онлайн-вакансии и автоматически отправляет персонализированный офер с вашего аккаунта Авито.
+        <div style="font-size: 12.5px; color: var(--hint-color); margin-bottom: 12px;">
+          Бот находит профильные услуги и онлайн-вакансии и автоматически отправляет персонализированный офер с вашего аккаунта Авито.
         </div>
 
         <div class="input-group">
@@ -778,7 +860,7 @@
           <button class="btn btn-accent" id="btn-start-avito" onclick="startAvitoSearch()" style="flex: 2;">
             ⚡ Запустить автоотклик на Авито
           </button>
-          <button class="btn btn-danger" id="btn-stop-avito" onclick="stopCurrentSearch()" style="flex: 1; background: #ef4444; color: #fff; font-weight: 700; border: 1px solid rgba(239, 68, 68, 0.4);">
+          <button class="btn btn-danger" onclick="stopCurrentSearch()" style="flex: 1;">
             🛑 Стоп
           </button>
         </div>
@@ -787,15 +869,17 @@
 
     <!-- TAB 4: БАЗА ЛИДОВ (CRM) -->
     <div id="tab-leads" class="tab-content">
-      <div style="margin-bottom: 12px;">
-        <input type="text" id="leads-search" class="input-control" placeholder="🔍 Поиск по названию, адресу, сфере..." oninput="renderLeads()">
+      <div style="margin-bottom: 10px;">
+        <input type="text" id="leads-search" class="input-control" placeholder="🔍 Поиск по названию, адресу, сфере, телефону..." oninput="renderLeads()">
       </div>
 
       <div class="filter-pills">
         <div class="pill active" onclick="setLeadFilter('all', this)">Все (<span id="count-all">0</span>)</div>
         <div class="pill" onclick="setLeadFilter('pending', this)">Ожидают (<span id="count-pending">0</span>)</div>
         <div class="pill" onclick="setLeadFilter('contacted', this)">Отправлено ✅ (<span id="count-contacted">0</span>)</div>
-        <div class="pill" onclick="setLeadFilter('tg_wa', this)">С мессенджерами</div>
+        <div class="pill" onclick="setLeadFilter('maps', this)">🗺 Карты (<span id="count-maps">0</span>)</div>
+        <div class="pill" onclick="setLeadFilter('avito', this)">⚡ Авито (<span id="count-avito">0</span>)</div>
+        <div class="pill" onclick="setLeadFilter('tg_wa', this)">📱 С мессенджерами</div>
       </div>
 
       <div id="leads-list-container">
@@ -806,40 +890,43 @@
     <!-- TAB 5: GEMINI & НАСТРОЙКИ -->
     <div id="tab-settings" class="tab-content">
       <div class="card">
-        <div class="card-title">⚡ Лимиты Gemini (ИИ)</div>
-        <div style="font-size: 13px; color: var(--hint-color); margin-bottom: 14px;">
+        <div class="card-title">⚡ Лимиты нейросети Gemini</div>
+        <div style="font-size: 12.5px; color: var(--hint-color); margin-bottom: 12px;">
           Отслеживание суточных квот Google Gemini для бесперебойной генерации оферов.
         </div>
 
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+        <div style="display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--card-border);">
           <span style="color: var(--hint-color);">Запросов сегодня:</span>
           <b id="gemini-requests">0 / 1500</b>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+        <div style="display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--card-border);">
           <span style="color: var(--hint-color);">Сгенерировано оферов:</span>
           <b id="gemini-pitches">0</b>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+        <div style="display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--card-border);">
           <span style="color: var(--hint-color);">Эко-режим (шаблоны при лимите):</span>
           <b id="gemini-eco-status" style="color: #10b981;">Включен</b>
         </div>
 
-        <div class="btn-row" style="margin-top: 14px;">
+        <div class="btn-row" style="margin-top: 12px;">
           <button class="btn btn-secondary btn-sm" onclick="toggleEcoMode()">
-            Переключить Эко-режим
+            🔄 Переключить Эко-режим
           </button>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">📥 Скачать базу лидов</div>
+        <div class="card-title">📥 Выгрузка базы лидов</div>
         <div style="display: flex; flex-direction: column; gap: 8px;">
-          <a class="btn btn-secondary" href="/api/export/map_leads.txt" target="_blank">
-            🗺 Скачать Лиды с Карт (TXT)
+          <button class="btn btn-accent btn-sm" onclick="sendExportToTelegram()">
+            📨 Отправить файлы в чат Telegram
+          </button>
+          <a class="btn btn-secondary btn-sm" href="leads.json" download="leads.json">
+            🗺 Скачать всю базу лидов (JSON)
           </a>
-          <a class="btn btn-secondary" href="/api/export/leads_contacted.txt" target="_blank">
-            ⚡ Скачать Отклики Авито (TXT)
-          </a>
+          <button class="btn btn-secondary btn-sm" onclick="exportLeadsCsv()">
+            📊 Экспорт базы в CSV (Excel)
+          </button>
         </div>
       </div>
     </div>
@@ -880,12 +967,14 @@
     // Инициализация Telegram WebApp
     const tg = window.Telegram?.WebApp;
     if (tg) {
-      tg.ready();
-      tg.expand();
-      const user = tg.initDataUnsafe?.user;
-      if (user?.first_name) {
-        document.getElementById('user-greeting').innerText = `Привет, ${user.first_name}!`;
-      }
+      try {
+        tg.ready();
+        tg.expand();
+        const user = tg.initDataUnsafe?.user;
+        if (user?.first_name) {
+          document.getElementById('user-greeting').innerText = `Привет, ${user.first_name}!`;
+        }
+      } catch (e) {}
     }
 
     function haptic(type = 'medium') {
@@ -901,7 +990,7 @@
       document.getElementById('toast-text').innerText = text;
       document.getElementById('toast-icon').innerText = icon;
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
+      setTimeout(() => toast.classList.remove('show'), 2600);
     }
 
     // НИШИ ДЛЯ КАРТ
@@ -923,6 +1012,7 @@
     let selectedNiches = new Set(["map_beauty", "map_nails"]);
     let allLeads = [];
     let currentFilter = 'all';
+    let isSchedulerActive = false;
 
     function initNichesGrid() {
       const container = document.getElementById('niches-container');
@@ -997,15 +1087,99 @@
         document.querySelectorAll('.nav-item')[tabIndex].classList.add('active');
       }
 
-      if (tabId === 'tab-leads') {
-        loadLeads();
-      }
-      if (tabId === 'tab-goal' || tabId === 'tab-settings') {
-        loadStats();
-      }
+      if (tabId === 'tab-leads') loadLeads();
+      if (tabId === 'tab-goal' || tabId === 'tab-settings') loadStats();
     }
 
-    // ЗАГРУЗКА ДАННЫХ
+    // УНИВЕРСАЛЬНЫЙ ДИСПЕТЧЕР КОМАНД БОТУ
+    function executeBotAction(action, payload = {}) {
+      haptic('medium');
+      showToast('Отправка команды боту...', '⏳');
+
+      // 1. Попытка вызвать локальный API (если Mini App открыт по туннелю/локально)
+      try {
+        if (action === 'stop') {
+          fetch('/api/search/stop', { method: 'POST' }).catch(() => {});
+        } else if (action === 'start_maps') {
+          fetch('/api/search/maps', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).catch(() => {});
+        } else if (action === 'start_avito') {
+          fetch('/api/search/avito', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).catch(() => {});
+        } else if (action === 'sched_start') {
+          fetch('/api/scheduler/start', { method: 'POST' }).catch(() => {});
+        } else if (action === 'sched_stop') {
+          fetch('/api/scheduler/stop', { method: 'POST' }).catch(() => {});
+        } else if (action === 'export') {
+          fetch('/api/export/telegram', { method: 'POST' }).catch(() => {});
+        } else if (action === 'toggle_eco') {
+          fetch('/api/gemini/toggle_eco', { method: 'POST' }).catch(() => {});
+        } else if (action === 'goal_manual') {
+          fetch('/api/goal/manual', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).catch(() => {});
+        }
+      } catch (e) {}
+
+      // 2. Попытка отправить через Telegram WebApp sendData (работает, если запущен с клавиатуры)
+      try {
+        if (window.Telegram?.WebApp?.sendData) {
+          window.Telegram.WebApp.sendData(JSON.stringify({ action, ...payload }));
+        }
+      } catch (e) {}
+
+      // 3. Главный надежный мост: Deep Linking через openTelegramLink
+      try {
+        let startParam = '';
+        if (action === 'stop') startParam = 'stop';
+        else if (action === 'export') startParam = 'export';
+        else if (action === 'sched_start') startParam = 'sched_start';
+        else if (action === 'sched_stop') startParam = 'sched_stop';
+        else if (action === 'limits') startParam = 'limits';
+        else if (action === 'plan') startParam = 'plan';
+        else if (action === 'goal_inc') startParam = 'goal_inc';
+        else if (action === 'goal_dec') startParam = 'goal_dec';
+        else if (action === 'toggle_eco') startParam = 'eco_toggle';
+        else if (action === 'start_avito') {
+          startParam = `avito_${payload.mode || 'service'}_${payload.category || 'beauty'}`;
+        } else if (action === 'start_maps') {
+          const limit = payload.max_per_niche || 5;
+          if (payload.query) {
+            // URL-safe base64 для безопасной передачи произвольного текста в Telegram
+            try {
+              const b64 = btoa(unescape(encodeURIComponent(payload.query)))
+                .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+              startParam = `maps_lim${limit}_b64_${b64}`.substring(0, 64);
+            } catch (err) {
+              startParam = `maps_lim${limit}_beauty`;
+            }
+          } else if (payload.niches && payload.niches.length === 12) {
+            startParam = `maps_lim${limit}_all`;
+          } else if (payload.niches && payload.niches.length) {
+            const shortNiches = payload.niches.map(n => n.replace('map_', '')).join('_');
+            startParam = `maps_lim${limit}_${shortNiches}`.substring(0, 64);
+          } else {
+            startParam = `maps_lim${limit}_beauty`;
+          }
+        }
+
+        if (startParam && window.Telegram?.WebApp?.openTelegramLink) {
+          window.Telegram.WebApp.openTelegramLink(`https://t.me/test14102805_bot?start=${startParam}`);
+        }
+      } catch (e) {}
+
+      showToast('Команда передана в бот!', '🚀');
+    }
+
+    // ЗАГРУЗКА ДАННЫХ И СТАТИСТИКИ
     async function loadStats() {
       try {
         let res = await fetch('/api/stats').catch(() => null);
@@ -1015,7 +1189,9 @@
         if (!res) return;
         const data = await res.json();
 
-        const today = data.today_total || 0;
+        // Учитываем локальные клики +1 / -1
+        const localOffset = parseInt(localStorage.getItem('manual_goal_offset') || '0', 10);
+        const today = Math.max(0, (data.today_total || 0) + localOffset);
         const goal = data.goal || 50;
         const pct = Math.min(100, Math.round((today / goal) * 100));
 
@@ -1026,10 +1202,10 @@
 
         document.getElementById('stat-avito').innerText = data.today_avito || 0;
         document.getElementById('stat-maps').innerText = data.today_maps || 0;
-        document.getElementById('stat-manual').innerText = data.today_manual || 0;
+        document.getElementById('stat-manual').innerText = Math.max(0, (data.today_manual || 0) + localOffset);
 
         document.getElementById('stat-yesterday').innerText = data.yesterday_total || 0;
-        document.getElementById('stat-all-time').innerText = data.all_time_total || 0;
+        document.getElementById('stat-all-time').innerText = (data.all_time_total || 0) + localOffset;
 
         const badge = document.getElementById('goal-status-badge');
         if (today >= goal) {
@@ -1038,6 +1214,17 @@
         } else {
           badge.className = 'lead-badge badge-pending';
           badge.innerText = 'В процессе';
+        }
+
+        // Автопарсинг статус
+        isSchedulerActive = Boolean(data.scheduler_active);
+        const schedBadge = document.getElementById('sched-badge');
+        if (isSchedulerActive) {
+          schedBadge.className = 'lead-badge badge-done';
+          schedBadge.innerText = '🟢 Включен (60 мин)';
+        } else {
+          schedBadge.className = 'lead-badge badge-pending';
+          schedBadge.innerText = '⚪ Остановлен';
         }
 
         // Gemini
@@ -1049,20 +1236,34 @@
       }
     }
 
-    async function adjustManualOutreach(delta) {
+    function adjustManualOutreach(delta) {
       haptic('medium');
-      try {
-        const res = await fetch('/api/goal/manual', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: delta > 0 ? 'inc' : 'dec' })
-        });
-        const data = await res.json();
-        showToast(delta > 0 ? '➕ Сообщение добавлено в зачет 50!' : '➖ Откат счетчика');
-        loadStats();
-      } catch (err) {
-        showToast('Ошибка обновления', '❌');
+      let offset = parseInt(localStorage.getItem('manual_goal_offset') || '0', 10);
+      offset += delta;
+      localStorage.setItem('manual_goal_offset', offset);
+
+      executeBotAction(delta > 0 ? 'goal_inc' : 'goal_dec', { action: delta > 0 ? 'inc' : 'dec' });
+      loadStats();
+    }
+
+    function toggleScheduler(start) {
+      haptic('medium');
+      isSchedulerActive = start;
+      const schedBadge = document.getElementById('sched-badge');
+      if (start) {
+        schedBadge.className = 'lead-badge badge-done';
+        schedBadge.innerText = '🟢 Включен (60 мин)';
+        executeBotAction('sched_start');
+      } else {
+        schedBadge.className = 'lead-badge badge-pending';
+        schedBadge.innerText = '⚪ Остановлен';
+        executeBotAction('sched_stop');
       }
+    }
+
+    function sendExportToTelegram() {
+      executeBotAction('export');
+      showToast('Файлы отправляются в чат Telegram!', '📂');
     }
 
     async function loadLeads() {
@@ -1074,6 +1275,7 @@
         if (!res) return;
         const data = await res.json();
         allLeads = data.leads || [];
+
         try {
           const stored = JSON.parse(localStorage.getItem('contacted_leads') || '{}');
           allLeads.forEach(l => {
@@ -1082,6 +1284,7 @@
             }
           });
         } catch (e) {}
+
         document.getElementById('stat-total-leads').innerText = allLeads.length;
         renderLeads();
       } catch (err) {
@@ -1098,19 +1301,22 @@
     }
 
     function renderLeads() {
-      const search = (document.getElementById('leads-search').value || '').toLowerCase();
+      const search = (document.getElementById('leads-search').value || '').toLowerCase().trim();
       const container = document.getElementById('leads-list-container');
 
       let filtered = allLeads.filter(lead => {
         const matchSearch = !search ||
           (lead.name && lead.name.toLowerCase().includes(search)) ||
           (lead.category && lead.category.toLowerCase().includes(search)) ||
-          (lead.address && lead.address.toLowerCase().includes(search));
+          (lead.address && lead.address.toLowerCase().includes(search)) ||
+          (lead.phone && lead.phone.toLowerCase().includes(search));
 
         if (!matchSearch) return false;
 
         if (currentFilter === 'pending') return !lead.is_contacted;
         if (currentFilter === 'contacted') return lead.is_contacted;
+        if (currentFilter === 'maps') return lead.type === 'map';
+        if (currentFilter === 'avito') return lead.type === 'avito';
         if (currentFilter === 'tg_wa') return (lead.telegram || lead.whatsapp);
         return true;
       });
@@ -1118,16 +1324,21 @@
       // Счётчики
       const pendingCount = allLeads.filter(l => !l.is_contacted).length;
       const contactedCount = allLeads.filter(l => l.is_contacted).length;
+      const mapsCount = allLeads.filter(l => l.type === 'map').length;
+      const avitoCount = allLeads.filter(l => l.type === 'avito').length;
+
       document.getElementById('count-all').innerText = allLeads.length;
       document.getElementById('count-pending').innerText = pendingCount;
       document.getElementById('count-contacted').innerText = contactedCount;
+      document.getElementById('count-maps').innerText = mapsCount;
+      document.getElementById('count-avito').innerText = avitoCount;
 
       if (!filtered.length) {
         container.innerHTML = `
-          <div style="text-align: center; padding: 40px 20px; color: var(--hint-color);">
+          <div style="text-align: center; padding: 35px 20px; color: var(--hint-color);">
             <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
-            <div>Лиды не найдены</div>
-            <div style="font-size: 12px; margin-top: 4px;">Запустите поиск на вкладке «Карты» или сбросьте фильтры</div>
+            <div style="font-weight: 600;">Лиды не найдены</div>
+            <div style="font-size: 12px; margin-top: 4px;">Запустите поиск на вкладке «Карты» / «Авито» или сбросьте фильтры</div>
           </div>
         `;
         return;
@@ -1135,13 +1346,18 @@
 
       container.innerHTML = filtered.map(lead => {
         const isDone = Boolean(lead.is_contacted);
+        const isMap = lead.type === 'map';
+
         return `
           <div class="lead-card ${isDone ? 'contacted' : ''}" id="lead-${lead.id}">
             <div class="lead-top">
               <div class="lead-name">${escapeHtml(lead.name || 'Компания')}</div>
-              <span class="lead-badge ${isDone ? 'badge-done' : 'badge-pending'}">
-                ${isDone ? '✅ Отправлено' : '⏳ Ожидает'}
-              </span>
+              <div class="lead-badges">
+                <span class="lead-badge badge-type">${isMap ? '🗺 Карты' : '⚡ Авито'}</span>
+                <span class="lead-badge ${isDone ? 'badge-done' : 'badge-pending'}">
+                  ${isDone ? '✅ Отправлено' : '⏳ Ожидает'}
+                </span>
+              </div>
             </div>
 
             <div class="lead-meta">
@@ -1152,7 +1368,7 @@
             </div>
 
             <div class="offer-box">
-              <div style="font-weight: 600; color: #93c5fd; margin-bottom: 4px;">💡 Персональный оффер (ROI):</div>
+              <div style="font-weight: 600; color: #93c5fd; margin-bottom: 4px;">💡 Выгода для бизнеса (Оффер ROI):</div>
               <div id="offer-text-${lead.id}">${escapeHtml(lead.offer_text || 'Оффер не сформирован')}</div>
               <button class="copy-btn" onclick="copyOffer('${lead.id}')">
                 📋 Скопировать текст оффера
@@ -1163,12 +1379,13 @@
               ${lead.telegram ? `<a class="btn-action btn-tg" href="${lead.telegram}" target="_blank">💬 Telegram</a>` : ''}
               ${lead.whatsapp ? `<a class="btn-action btn-wa" href="${lead.whatsapp}" target="_blank">🟢 WhatsApp</a>` : ''}
               ${lead.vk ? `<a class="btn-action btn-vk" href="${lead.vk}" target="_blank">🔵 VK</a>` : ''}
-              ${lead.map_url ? `<a class="btn-action btn-map" href="${lead.map_url}" target="_blank">${lead.type === 'avito' ? '🔗 На Авито' : '🗺 Карты'}</a>` : ''}
+              ${lead.phone ? `<a class="btn-action btn-phone" href="tel:${escapeHtml(lead.phone.replace(/[^0-9+]/g, ''))}">📞 Позвонить</a>` : ''}
+              ${lead.map_url ? `<a class="btn-action btn-map" href="${lead.map_url}" target="_blank">${isMap ? '🗺 На Картах' : '🔗 На Авито'}</a>` : ''}
             </div>
 
             <div style="margin-top: 10px;">
               <button class="btn ${isDone ? 'btn-secondary' : 'btn-success'} btn-sm" onclick="toggleLeadContacted('${lead.id}', ${!isDone})">
-                ${isDone ? '↩️ Снять отметку' : '✉️ Отметить: «Сообщение отправлено» (+1 в план)'}
+                ${isDone ? '↩️ Снять отметку' : '✉️ Отметить: «Сообщение отправлено» (+1 в план 50)'}
               </button>
             </div>
           </div>
@@ -1178,16 +1395,18 @@
 
     async function toggleLeadContacted(leadId, newStatus) {
       haptic('medium');
+
+      // 1. Отправляем на бэкенд
       try {
-        await fetch('/api/lead/toggle_contacted', {
+        fetch('/api/lead/toggle_contacted', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: leadId, is_contacted: newStatus })
-        });
+        }).catch(() => {});
       } catch (err) {}
 
-      // Сохраняем в локальное хранилище для мгновенного отклика на Vercel
-      const lead = allLeads.find(l => l.id === leadId);
+      // 2. Локальное сохранение для мгновенного отклика
+      const lead = allLeads.find(l => String(l.id) === String(leadId));
       if (lead) {
         lead.is_contacted = newStatus;
         try {
@@ -1197,7 +1416,12 @@
         } catch (e) {}
       }
 
-      showToast(newStatus ? '✅ Засчитано в дневной план (50)!' : 'Отметка снята');
+      // 3. Обновление дневного плана (+1 / -1)
+      let offset = parseInt(localStorage.getItem('manual_goal_offset') || '0', 10);
+      offset += (newStatus ? 1 : -1);
+      localStorage.setItem('manual_goal_offset', offset);
+
+      showToast(newStatus ? '✅ Засчитано в суточный план (50)!' : 'Отметка снята');
       renderLeads();
       loadStats();
     }
@@ -1205,37 +1429,36 @@
     function copyOffer(leadId) {
       haptic('light');
       const text = document.getElementById(`offer-text-${leadId}`).innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Оффер скопирован в буфер!');
-      }).catch(() => {
-        showToast('Ошибка копирования', '❌');
-      });
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Оффер скопирован в буфер обмена!');
+        }).catch(() => {
+          fallbackCopyText(text);
+        });
+      } else {
+        fallbackCopyText(text);
+      }
+    }
+
+    function fallbackCopyText(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast('Оффер скопирован!');
+      } catch (err) {
+        showToast('Не удалось скопировать', '❌');
+      }
+      document.body.removeChild(textArea);
     }
 
     // ОСТАНОВКА ПОИСКА
-    async function stopCurrentSearch() {
-      haptic('heavy');
-      showToast('🛑 Останавливаем поиск...', '⏳');
-
-      try {
-        await fetch('/api/search/stop', { method: 'POST' });
-      } catch (e) {}
-
-      // Fallback 1: отправляем боту через Telegram WebApp SDK
-      try {
-        if (window.Telegram?.WebApp?.sendData) {
-          window.Telegram.WebApp.sendData(JSON.stringify({ action: "stop" }));
-        }
-      } catch (e) {}
-
-      // Fallback 2: переход по команде /stop в боте
-      try {
-        if (window.Telegram?.WebApp?.openTelegramLink) {
-          window.Telegram.WebApp.openTelegramLink("https://t.me/test14102805_bot?start=stop");
-        }
-      } catch (e) {}
-
-      showToast('🛑 Запрос на остановку отправлен!');
+    function stopCurrentSearch() {
+      executeBotAction('stop');
       const statusBox = document.getElementById('maps-search-status');
       if (statusBox) statusBox.style.display = 'none';
 
@@ -1247,8 +1470,7 @@
     }
 
     // ЗАПУСК ПОИСКА ПО КАРТАМ
-    async function startMapsSearch() {
-      haptic('heavy');
+    function startMapsSearch() {
       const niches = Array.from(selectedNiches);
       const customQuery = document.getElementById('maps-custom-query').value.trim();
       const limit = parseInt(document.getElementById('maps-limit').value) || 5;
@@ -1264,88 +1486,71 @@
 
       btn.disabled = true;
       statusBox.style.display = 'block';
-      statusText.innerText = 'Запуск поиска...';
+      statusText.innerText = 'Запуск поиска на картах...';
 
-      let sent = false;
-      try {
-        const res = await fetch('/api/search/maps', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            niches: niches,
-            query: customQuery,
-            max_per_niche: limit
-          })
-        });
-        if (res.ok) sent = true;
-      } catch (err) {}
+      executeBotAction('start_maps', {
+        niches: niches,
+        query: customQuery,
+        max_per_niche: limit
+      });
 
-      if (!sent) {
-        try {
-          if (window.Telegram?.WebApp?.sendData) {
-            window.Telegram.WebApp.sendData(JSON.stringify({
-              action: "start_maps",
-              niches: niches,
-              query: customQuery,
-              max_per_niche: limit
-            }));
-            sent = true;
-          }
-        } catch (e) {}
-      }
-
-      showToast('🚀 Поиск по картам запущен!');
-      statusText.innerText = 'Поиск выполняется! Результаты поступают в бот и во вкладку «Лиды».';
+      statusText.innerText = 'Поиск выполняется! Результаты сразу поступают в чат и во вкладку «Лиды».';
       setTimeout(() => {
         btn.disabled = false;
-      }, 4000);
+      }, 3500);
     }
 
     // ЗАПУСК АВИТО
-    async function startAvitoSearch() {
-      haptic('heavy');
+    function startAvitoSearch() {
       const mode = document.getElementById('avito-mode').value;
       const category = document.getElementById('avito-category').value;
       const btn = document.getElementById('btn-start-avito');
 
       btn.disabled = true;
 
-      let sent = false;
-      try {
-        const res = await fetch('/api/search/avito', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mode: mode, category: category })
-        });
-        if (res.ok) sent = true;
-      } catch (err) {}
+      executeBotAction('start_avito', { mode: mode, category: category });
 
-      if (!sent) {
-        try {
-          if (window.Telegram?.WebApp?.sendData) {
-            window.Telegram.WebApp.sendData(JSON.stringify({
-              action: "start_avito",
-              mode: mode,
-              category: category
-            }));
-          }
-        } catch (e) {}
-      }
-
-      showToast('⚡ Автоотклики Авито запущены!');
-      setTimeout(() => { btn.disabled = false; }, 4000);
+      setTimeout(() => {
+        btn.disabled = false;
+      }, 3500);
     }
 
-    async function toggleEcoMode() {
+    function toggleEcoMode() {
+      executeBotAction('toggle_eco');
+      setTimeout(loadStats, 1000);
+    }
+
+    function exportLeadsCsv() {
       haptic('light');
-      try {
-        const res = await fetch('/api/gemini/toggle_eco', { method: 'POST' });
-        const data = await res.json();
-        showToast(data.eco_mode ? 'Эко-режим включен!' : 'Эко-режим выключен!');
-        loadStats();
-      } catch (e) {
-        showToast('Ошибка переключения', '❌');
+      if (!allLeads.length) {
+        showToast('Лиды отсутствуют для экспорта', '⚠️');
+        return;
       }
+      const headers = ["ID", "Тип", "Название", "Категория", "Адрес", "Рейтинг", "Телефон", "Telegram", "WhatsApp", "VK", "Отправлен", "Текст Оффера"];
+      const rows = allLeads.map(l => [
+        l.id,
+        l.type === 'map' ? 'Карты' : 'Авито',
+        `"${(l.name || '').replace(/"/g, '""')}"`,
+        `"${(l.category || '').replace(/"/g, '""')}"`,
+        `"${(l.address || '').replace(/"/g, '""')}"`,
+        `"${(l.rating || '').replace(/"/g, '""')}"`,
+        `"${(l.phone || '').replace(/"/g, '""')}"`,
+        `"${(l.telegram || '').replace(/"/g, '""')}"`,
+        `"${(l.whatsapp || '').replace(/"/g, '""')}"`,
+        `"${(l.vk || '').replace(/"/g, '""')}"`,
+        l.is_contacted ? 'Да' : 'Нет',
+        `"${(l.offer_text || '').replace(/"/g, '""')}"`,
+      ]);
+
+      const csvContent = "\uFEFF" + [headers.join(";"), ...rows.map(r => r.join(";"))].join("\r\n");
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `leads_export_${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('CSV файл экспортирован!');
     }
 
     function escapeHtml(text) {
@@ -1363,7 +1568,8 @@
       initNichesGrid();
       updateAvitoCategories();
       loadStats();
-      // Периодическое обновление статистики каждые 15 сек
+      loadLeads();
+      // Периодическое обновление каждые 15 сек
       setInterval(loadStats, 15000);
     });
   </script>

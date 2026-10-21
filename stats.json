@@ -8,5 +8,7 @@
   "all_time_total": 6,
   "eco_mode": false,
   "gemini_requests": 0,
-  "gemini_pitches": 0
+  "gemini_pitches": 0,
+  "scheduler_active": false,
+  "current_run_active": false
 }
