@@ -1,0 +1,12 @@
+{
+  "goal": 50,
+  "today_total": 0,
+  "today_avito": 0,
+  "today_maps": 0,
+  "today_manual": 0,
+  "yesterday_total": 6,
+  "all_time_total": 19,
+  "eco_mode": false,
+  "gemini_requests": 0,
+  "gemini_pitches": 19
+}

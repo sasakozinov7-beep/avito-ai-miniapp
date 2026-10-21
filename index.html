@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Avito & Maps AI Outreach</title>
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg-color: var(--tg-theme-bg-color, #0f172a);
+      --secondary-bg: var(--tg-theme-secondary-bg-color, #1e293b);
+      --text-color: var(--tg-theme-text-color, #f8fafc);
+      --hint-color: var(--tg-theme-hint-color, #94a3b8);
+      --link-color: var(--tg-theme-link-color, #38bdf8);
+      --button-color: var(--tg-theme-button-color, #2563eb);
+      --button-text: var(--tg-theme-button-text-color, #ffffff);
+      --accent: #3b82f6;
+      --accent-grad: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-size: 14px;
+      line-height: 1.5;
+      padding-bottom: 80px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-grad);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--hint-color);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* CONTAINER */
+    .container {
+      padding: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* TABS */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* GOAL HERO */
+    .goal-hero {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .goal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .goal-number {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+
+    .goal-target {
+      font-size: 16px;
+      color: var(--hint-color);
+      font-weight: 500;
+    }
+
+    .progress-bar-bg {
+      background: rgba(255, 255, 255, 0.1);
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 12px 0 14px;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      background: var(--accent-grad);
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+    }
+
+    .goal-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .sub-stat {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .sub-stat-num {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sub-stat-label {
+      font-size: 11px;
+      color: var(--hint-color);
+      margin-top: 2px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--button-color);
+      color: var(--button-text);
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+    }
+
+    .btn-accent {
+      background: var(--accent-grad);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-color);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-success {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .btn-sm {
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    /* NICHES CHIPS GRID */
+    .niche-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .niche-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .niche-chip.selected {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+    }
+
+    .niche-checkbox {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1.5px solid var(--hint-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .niche-chip.selected .niche-checkbox {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: #fff;
+    }
+
+    .niche-text {
+      font-size: 13px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    /* LEADS LIST */
+    .lead-card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    .lead-card.contacted {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .lead-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .lead-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .lead-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .badge-pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-done {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .lead-meta {
+      font-size: 12px;
+      color: var(--hint-color);
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-action {
+      flex: 1;
+      min-width: 120px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-tg { background: #0088cc; color: #fff; }
+    .btn-wa { background: #25d366; color: #fff; }
+    .btn-vk { background: #4a76a8; color: #fff; }
+    .btn-map { background: #fc3f1d; color: #fff; }
+
+    /* OFFER ACCORDION */
+    .offer-box {
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 3px solid #3b82f6;
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+      margin: 12px 0 8px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 6px;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 6px;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--hint-color);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 10px;
+      transition: all 0.2s;
+      flex: 1;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 85px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid var(--card-border);
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* INPUTS */
+    .input-group {
+      margin-bottom: 14px;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 12px;
+      color: var(--hint-color);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .input-control {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input-control:focus {
+      border-color: #3b82f6;
+    }
+
+    /* SEARCH FILTER PILLS */
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .filter-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      white-space: nowrap;
+      cursor: pointer;
+      color: var(--hint-color);
+    }
+
+    .pill.active {
+      background: #3b82f6;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+
+    /* SPINNER */
+    .spinner {
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-left-color: #3b82f6;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <div>
+        <div class="brand-title">AI Outreach CRM</div>
+        <div class="brand-subtitle" id="user-greeting">Avito & Yandex Maps Bot</div>
+      </div>
+    </div>
+    <div class="status-badge">
+      <div class="status-dot"></div>
+      <span>Бот активен</span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+
+    <!-- TAB 1: ПЛАН 50 -->
+    <div id="tab-goal" class="tab-content active">
+      <div class="card goal-hero">
+        <div class="goal-header">
+          <div>
+            <div style="font-size: 13px; color: var(--hint-color); font-weight: 600; text-transform: uppercase;">План на сегодня</div>
+            <div style="display: flex; align-items: baseline; gap: 4px; margin-top: 4px;">
+              <span class="goal-number" id="goal-today">0</span>
+              <span class="goal-target">/ 50 сообщений</span>
+            </div>
+          </div>
+          <div id="goal-status-badge" class="lead-badge badge-pending">В процессе</div>
+        </div>
+
+        <div class="progress-bar-bg">
+          <div id="goal-progress-fill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--hint-color);">
+          <span id="goal-percent-text">Выполнено: 0%</span>
+          <span id="goal-remaining-text">Осталось: 50</span>
+        </div>
+
+        <div class="goal-stats-grid">
+          <div class="sub-stat">
+            <div class="sub-stat-num" id="stat-avito">0</div>
+            <div class="sub-stat-label">⚡ Авито</div>
+          </div>
+          <div class="sub-stat">
+            <div class="sub-stat-num" id="stat-maps">0</div>
+            <div class="sub-stat-label">🗺 Карты</div>
+          </div>
+          <div class="sub-stat">
+            <div class="sub-stat-num" id="stat-manual">0</div>
+            <div class="sub-stat-label">✍️ Ручной</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-accent" onclick="adjustManualOutreach(1)">
+            ➕ Отправил сообщение (+1)
+          </button>
+          <button class="btn btn-secondary" style="width: 70px;" onclick="adjustManualOutreach(-1)">
+            ➖
+          </button>
+        </div>
+      </div>
+
+      <!-- ИСТОРИЯ И СТАТИСТИКА -->
+      <div class="card">
+        <div class="card-title">📊 Общая статистика</div>
+        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+          <span style="color: var(--hint-color);">Вчера отправлено:</span>
+          <b id="stat-yesterday">0</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+          <span style="color: var(--hint-color);">Всего за всё время:</span>
+          <b id="stat-all-time">0</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+          <span style="color: var(--hint-color);">Всего в базе лидов:</span>
+          <b id="stat-total-leads">0</b>
+        </div>
+      </div>
+
+      <!-- БЫСТРЫЕ ДЕЙСТВИЯ -->
+      <div class="card">
+        <div class="card-title">⚡ Быстрый старт</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button class="btn btn-secondary" onclick="switchTab('tab-maps')">
+            🗺 Найти салоны и бизнес на Яндекс Картах
+          </button>
+          <button class="btn btn-secondary" onclick="switchTab('tab-leads')">
+            📋 Открыть базу собранных лидов и оферов
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: КАРТЫ & ПОИСК -->
+    <div id="tab-maps" class="tab-content">
+      <div class="card">
+        <div class="card-title">🗺 Поиск бизнеса на Яндекс Картах</div>
+        <div style="font-size: 13px; color: var(--hint-color); margin-bottom: 12px;">
+          Бот находит реальные компании в Москве, извлекает прямые <b>Telegram, WhatsApp, VK, телефоны</b> и пишет оффер с расчётом окупаемости.
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 12px; font-weight: 600; color: var(--hint-color);">ВЫБЕРИТЕ НАПРАВЛЕНИЯ:</span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-secondary btn-sm" onclick="selectAllNiches(true)">Все (12)</button>
+            <button class="btn btn-secondary btn-sm" onclick="selectAllNiches(false)">Сброс</button>
+          </div>
+        </div>
+
+        <div class="niche-grid" id="niches-container">
+          <!-- Генерируется динамически через JS -->
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Лимит на каждую нишу:</label>
+          <select id="maps-limit" class="input-control">
+            <option value="3">3 компании на нишу</option>
+            <option value="5" selected>5 компаний на нишу</option>
+            <option value="10">10 компаний на нишу</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Или свой поисковый запрос (город / ниша):</label>
+          <input type="text" id="maps-custom-query" class="input-control" placeholder="Например: барбершоп Москва">
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-accent" id="btn-start-maps" onclick="startMapsSearch()" style="flex: 2;">
+            🚀 Запустить поиск на Картах
+          </button>
+          <button class="btn btn-danger" id="btn-stop-maps" onclick="stopCurrentSearch()" style="flex: 1; background: #ef4444; color: #fff; font-weight: 700; border: 1px solid rgba(239, 68, 68, 0.4);">
+            🛑 Стоп
+          </button>
+        </div>
+
+        <div id="maps-search-status" style="display: none; margin-top: 14px; padding: 12px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; font-size: 13px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="spinner"></span>
+              <span id="maps-status-text">Инициализация поиска...</span>
+            </div>
+            <button class="btn btn-sm" style="width: auto; background: #ef4444; color: #fff; padding: 4px 10px;" onclick="stopCurrentSearch()">
+              🛑 Остановить
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: АВИТО АВТООТКЛИКИ -->
+    <div id="tab-avito" class="tab-content">
+      <div class="card">
+        <div class="card-title">⚡ Автоотклики на Авито</div>
+        <div style="font-size: 13px; color: var(--hint-color); margin-bottom: 12px;">
+          Бот находит свежие услуги или онлайн-вакансии и автоматически отправляет персонализированный офер с вашего аккаунта Авито.
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Режим работы:</label>
+          <select id="avito-mode" class="input-control" onchange="updateAvitoCategories()">
+            <option value="service" selected>🛠 Сфера услуг (B2B владельцы бизнеса)</option>
+            <option value="vacancy">💼 Онлайн-вакансии (чаты, операторы, поддержка)</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Сфера бизнеса:</label>
+          <select id="avito-category" class="input-control">
+            <!-- Заполняется динамически -->
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-accent" id="btn-start-avito" onclick="startAvitoSearch()" style="flex: 2;">
+            ⚡ Запустить автоотклик на Авито
+          </button>
+          <button class="btn btn-danger" id="btn-stop-avito" onclick="stopCurrentSearch()" style="flex: 1; background: #ef4444; color: #fff; font-weight: 700; border: 1px solid rgba(239, 68, 68, 0.4);">
+            🛑 Стоп
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: БАЗА ЛИДОВ (CRM) -->
+    <div id="tab-leads" class="tab-content">
+      <div style="margin-bottom: 12px;">
+        <input type="text" id="leads-search" class="input-control" placeholder="🔍 Поиск по названию, адресу, сфере..." oninput="renderLeads()">
+      </div>
+
+      <div class="filter-pills">
+        <div class="pill active" onclick="setLeadFilter('all', this)">Все (<span id="count-all">0</span>)</div>
+        <div class="pill" onclick="setLeadFilter('pending', this)">Ожидают (<span id="count-pending">0</span>)</div>
+        <div class="pill" onclick="setLeadFilter('contacted', this)">Отправлено ✅ (<span id="count-contacted">0</span>)</div>
+        <div class="pill" onclick="setLeadFilter('tg_wa', this)">С мессенджерами</div>
+      </div>
+
+      <div id="leads-list-container">
+        <!-- Карточки лидов -->
+      </div>
+    </div>
+
+    <!-- TAB 5: GEMINI & НАСТРОЙКИ -->
+    <div id="tab-settings" class="tab-content">
+      <div class="card">
+        <div class="card-title">⚡ Лимиты Gemini (ИИ)</div>
+        <div style="font-size: 13px; color: var(--hint-color); margin-bottom: 14px;">
+          Отслеживание суточных квот Google Gemini для бесперебойной генерации оферов.
+        </div>
+
+        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+          <span style="color: var(--hint-color);">Запросов сегодня:</span>
+          <b id="gemini-requests">0 / 1500</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+          <span style="color: var(--hint-color);">Сгенерировано оферов:</span>
+          <b id="gemini-pitches">0</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+          <span style="color: var(--hint-color);">Эко-режим (шаблоны при лимите):</span>
+          <b id="gemini-eco-status" style="color: #10b981;">Включен</b>
+        </div>
+
+        <div class="btn-row" style="margin-top: 14px;">
+          <button class="btn btn-secondary btn-sm" onclick="toggleEcoMode()">
+            Переключить Эко-режим
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📥 Скачать базу лидов</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a class="btn btn-secondary" href="/api/export/map_leads.txt" target="_blank">
+            🗺 Скачать Лиды с Карт (TXT)
+          </a>
+          <a class="btn btn-secondary" href="/api/export/leads_contacted.txt" target="_blank">
+            ⚡ Скачать Отклики Авито (TXT)
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('tab-goal')">
+      <div class="nav-icon">🎯</div>
+      <div>План 50</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-maps')">
+      <div class="nav-icon">🗺</div>
+      <div>Карты</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-avito')">
+      <div class="nav-icon">⚡</div>
+      <div>Авито</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-leads')">
+      <div class="nav-icon">📋</div>
+      <div>Лиды CRM</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-settings')">
+      <div class="nav-icon">⚙️</div>
+      <div>Лимиты</div>
+    </div>
+  </nav>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast">
+    <span id="toast-icon">✅</span>
+    <span id="toast-text">Сообщение скопировано!</span>
+  </div>
+
+  <script>
+    // Инициализация Telegram WebApp
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+      const user = tg.initDataUnsafe?.user;
+      if (user?.first_name) {
+        document.getElementById('user-greeting').innerText = `Привет, ${user.first_name}!`;
+      }
+    }
+
+    function haptic(type = 'medium') {
+      try {
+        if (tg?.HapticFeedback) {
+          tg.HapticFeedback.impactOccurred(type);
+        }
+      } catch (e) {}
+    }
+
+    function showToast(text, icon = '✅') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = text;
+      document.getElementById('toast-icon').innerText = icon;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // НИШИ ДЛЯ КАРТ
+    const MAPS_NICHES = [
+      { key: "map_nails", label: "💅 Ногтевые студии", title: "Студии маникюра & Наращивание" },
+      { key: "map_hair", label: "💇‍♀️ Парикмахерские", title: "Парикмахерские & Волосы" },
+      { key: "map_brows", label: "👁 Брови & Ресницы", title: "Студии бровей & Ресниц" },
+      { key: "map_epil", label: "✨ Лазерная эпиляция", title: "Лазерная эпиляция" },
+      { key: "map_beauty", label: "💄 Салоны красоты", title: "Салоны красоты (все)" },
+      { key: "map_dental", label: "🦷 Стоматологии", title: "Стоматологии & Клиники" },
+      { key: "map_auto", label: "🚗 Автосервисы & СТО", title: "Автосервисы & СТО" },
+      { key: "map_clean", label: "🧹 Клининг & Уборка", title: "Клининговые компании" },
+      { key: "map_ceil", label: "🏗 Натяжные потолки", title: "Натяжные потолки" },
+      { key: "map_renov", label: "🏢 Ремонт квартир", title: "Ремонт квартир" },
+      { key: "map_appl", label: "🔧 Ремонт техники", title: "Ремонт бытовой техники" },
+      { key: "map_fitness", label: "🏋️ Фитнес & Йога", title: "Фитнес-клубы & Йога" },
+    ];
+
+    let selectedNiches = new Set(["map_beauty", "map_nails"]);
+    let allLeads = [];
+    let currentFilter = 'all';
+
+    function initNichesGrid() {
+      const container = document.getElementById('niches-container');
+      container.innerHTML = MAPS_NICHES.map(n => `
+        <div class="niche-chip ${selectedNiches.has(n.key) ? 'selected' : ''}" onclick="toggleNiche('${n.key}', this)">
+          <div class="niche-checkbox">${selectedNiches.has(n.key) ? '✓' : ''}</div>
+          <div class="niche-text">${n.label}</div>
+        </div>
+      `).join('');
+    }
+
+    function toggleNiche(key, el) {
+      haptic('light');
+      if (selectedNiches.has(key)) {
+        selectedNiches.delete(key);
+        el.classList.remove('selected');
+        el.querySelector('.niche-checkbox').innerText = '';
+      } else {
+        selectedNiches.add(key);
+        el.classList.add('selected');
+        el.querySelector('.niche-checkbox').innerText = '✓';
+      }
+    }
+
+    function selectAllNiches(select) {
+      haptic('medium');
+      if (select) {
+        selectedNiches = new Set(MAPS_NICHES.map(n => n.key));
+      } else {
+        selectedNiches.clear();
+      }
+      initNichesGrid();
+    }
+
+    // СФЕРЫ АВИТО
+    const AVITO_SERVICES = [
+      { key: "beauty", name: "💅 Салоны красоты (маникюр, волосы, брови)" },
+      { key: "ceilings", name: "🏗 Натяжные потолки (установка)" },
+      { key: "renovation", name: "🏢 Ремонт квартир и отделка" },
+      { key: "cleaning", name: "🧹 Клининг и уборка" },
+      { key: "appliances", name: "🔧 Ремонт стиральных машин и техники" },
+      { key: "auto", name: "🚗 Автосервис и ремонт авто" },
+      { key: "air_conditioning", name: "❄️ Установка кондиционеров" },
+      { key: "furniture", name: "🛋 Перетяжка и ремонт мебели" },
+    ];
+
+    const AVITO_VACANCIES = [
+      { key: "v_chat", name: "💬 Оператор чата онлайн" },
+      { key: "v_orders", name: "📥 Обработка заявок онлайн" },
+      { key: "v_support", name: "🎧 Поддержка клиентов онлайн" },
+      { key: "v_text", name: "📱 Менеджер переписки онлайн" },
+      { key: "v_remote", name: "🌐 Удаленный оператор онлайн" },
+    ];
+
+    function updateAvitoCategories() {
+      const mode = document.getElementById('avito-mode').value;
+      const select = document.getElementById('avito-category');
+      const list = mode === 'service' ? AVITO_SERVICES : AVITO_VACANCIES;
+      select.innerHTML = list.map(item => `<option value="${item.key}">${item.name}</option>`).join('');
+    }
+
+    // НАВИГАЦИЯ ПО ТАБАМ
+    function switchTab(tabId) {
+      haptic('light');
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+
+      const tabIndex = ['tab-goal', 'tab-maps', 'tab-avito', 'tab-leads', 'tab-settings'].indexOf(tabId);
+      if (tabIndex >= 0) {
+        document.querySelectorAll('.nav-item')[tabIndex].classList.add('active');
+      }
+
+      if (tabId === 'tab-leads') {
+        loadLeads();
+      }
+      if (tabId === 'tab-goal' || tabId === 'tab-settings') {
+        loadStats();
+      }
+    }
+
+    // ЗАГРУЗКА ДАННЫХ
+    async function loadStats() {
+      try {
+        let res = await fetch('/api/stats').catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch('stats.json').catch(() => null);
+        }
+        if (!res) return;
+        const data = await res.json();
+
+        const today = data.today_total || 0;
+        const goal = data.goal || 50;
+        const pct = Math.min(100, Math.round((today / goal) * 100));
+
+        document.getElementById('goal-today').innerText = today;
+        document.getElementById('goal-progress-fill').style.width = `${pct}%`;
+        document.getElementById('goal-percent-text').innerText = `Выполнено: ${pct}%`;
+        document.getElementById('goal-remaining-text').innerText = `Осталось: ${Math.max(0, goal - today)}`;
+
+        document.getElementById('stat-avito').innerText = data.today_avito || 0;
+        document.getElementById('stat-maps').innerText = data.today_maps || 0;
+        document.getElementById('stat-manual').innerText = data.today_manual || 0;
+
+        document.getElementById('stat-yesterday').innerText = data.yesterday_total || 0;
+        document.getElementById('stat-all-time').innerText = data.all_time_total || 0;
+
+        const badge = document.getElementById('goal-status-badge');
+        if (today >= goal) {
+          badge.className = 'lead-badge badge-done';
+          badge.innerText = '🎉 Выполнено!';
+        } else {
+          badge.className = 'lead-badge badge-pending';
+          badge.innerText = 'В процессе';
+        }
+
+        // Gemini
+        document.getElementById('gemini-requests').innerText = `${data.gemini_requests || 0} / 1500`;
+        document.getElementById('gemini-pitches').innerText = data.gemini_pitches || 0;
+        document.getElementById('gemini-eco-status').innerText = data.eco_mode ? "Включен (Экономия)" : "Выключен (Максимум Gemini)";
+      } catch (err) {
+        console.error('Ошибка загрузки статистики:', err);
+      }
+    }
+
+    async function adjustManualOutreach(delta) {
+      haptic('medium');
+      try {
+        const res = await fetch('/api/goal/manual', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: delta > 0 ? 'inc' : 'dec' })
+        });
+        const data = await res.json();
+        showToast(delta > 0 ? '➕ Сообщение добавлено в зачет 50!' : '➖ Откат счетчика');
+        loadStats();
+      } catch (err) {
+        showToast('Ошибка обновления', '❌');
+      }
+    }
+
+    async function loadLeads() {
+      try {
+        let res = await fetch('/api/leads').catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch('leads.json').catch(() => null);
+        }
+        if (!res) return;
+        const data = await res.json();
+        allLeads = data.leads || [];
+        try {
+          const stored = JSON.parse(localStorage.getItem('contacted_leads') || '{}');
+          allLeads.forEach(l => {
+            if (stored[l.id] !== undefined) {
+              l.is_contacted = stored[l.id];
+            }
+          });
+        } catch (e) {}
+        document.getElementById('stat-total-leads').innerText = allLeads.length;
+        renderLeads();
+      } catch (err) {
+        console.error('Ошибка загрузки лидов:', err);
+      }
+    }
+
+    function setLeadFilter(filter, el) {
+      haptic('light');
+      currentFilter = filter;
+      document.querySelectorAll('.filter-pills .pill').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      renderLeads();
+    }
+
+    function renderLeads() {
+      const search = (document.getElementById('leads-search').value || '').toLowerCase();
+      const container = document.getElementById('leads-list-container');
+
+      let filtered = allLeads.filter(lead => {
+        const matchSearch = !search ||
+          (lead.name && lead.name.toLowerCase().includes(search)) ||
+          (lead.category && lead.category.toLowerCase().includes(search)) ||
+          (lead.address && lead.address.toLowerCase().includes(search));
+
+        if (!matchSearch) return false;
+
+        if (currentFilter === 'pending') return !lead.is_contacted;
+        if (currentFilter === 'contacted') return lead.is_contacted;
+        if (currentFilter === 'tg_wa') return (lead.telegram || lead.whatsapp);
+        return true;
+      });
+
+      // Счётчики
+      const pendingCount = allLeads.filter(l => !l.is_contacted).length;
+      const contactedCount = allLeads.filter(l => l.is_contacted).length;
+      document.getElementById('count-all').innerText = allLeads.length;
+      document.getElementById('count-pending').innerText = pendingCount;
+      document.getElementById('count-contacted').innerText = contactedCount;
+
+      if (!filtered.length) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; color: var(--hint-color);">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+            <div>Лиды не найдены</div>
+            <div style="font-size: 12px; margin-top: 4px;">Запустите поиск на вкладке «Карты» или сбросьте фильтры</div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(lead => {
+        const isDone = Boolean(lead.is_contacted);
+        return `
+          <div class="lead-card ${isDone ? 'contacted' : ''}" id="lead-${lead.id}">
+            <div class="lead-top">
+              <div class="lead-name">${escapeHtml(lead.name || 'Компания')}</div>
+              <span class="lead-badge ${isDone ? 'badge-done' : 'badge-pending'}">
+                ${isDone ? '✅ Отправлено' : '⏳ Ожидает'}
+              </span>
+            </div>
+
+            <div class="lead-meta">
+              <span>📂 ${escapeHtml(lead.category || 'Услуги')}</span>
+              <span>📍 ${escapeHtml(lead.address || 'Москва')}</span>
+              ${lead.rating ? `<span>⭐ ${lead.rating}</span>` : ''}
+              ${lead.phone ? `<span>📞 <b>${escapeHtml(lead.phone)}</b></span>` : ''}
+            </div>
+
+            <div class="offer-box">
+              <div style="font-weight: 600; color: #93c5fd; margin-bottom: 4px;">💡 Персональный оффер (ROI):</div>
+              <div id="offer-text-${lead.id}">${escapeHtml(lead.offer_text || 'Оффер не сформирован')}</div>
+              <button class="copy-btn" onclick="copyOffer(${lead.id})">
+                📋 Скопировать текст оффера
+              </button>
+            </div>
+
+            <div class="lead-actions">
+              ${lead.telegram ? `<a class="btn-action btn-tg" href="${lead.telegram}" target="_blank">💬 Telegram</a>` : ''}
+              ${lead.whatsapp ? `<a class="btn-action btn-wa" href="${lead.whatsapp}" target="_blank">🟢 WhatsApp</a>` : ''}
+              ${lead.vk ? `<a class="btn-action btn-vk" href="${lead.vk}" target="_blank">🔵 VK</a>` : ''}
+              ${lead.map_url ? `<a class="btn-action btn-map" href="${lead.map_url}" target="_blank">🗺 Карты</a>` : ''}
+            </div>
+
+            <div style="margin-top: 10px;">
+              <button class="btn ${isDone ? 'btn-secondary' : 'btn-success'} btn-sm" onclick="toggleLeadContacted(${lead.id}, ${!isDone})">
+                ${isDone ? '↩️ Снять отметку' : '✉️ Отметить: «Сообщение отправлено» (+1 в план)'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function toggleLeadContacted(leadId, newStatus) {
+      haptic('medium');
+      try {
+        await fetch('/api/lead/toggle_contacted', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: leadId, is_contacted: newStatus })
+        });
+      } catch (err) {}
+
+      // Сохраняем в локальное хранилище для мгновенного отклика на Vercel
+      const lead = allLeads.find(l => l.id === leadId);
+      if (lead) {
+        lead.is_contacted = newStatus;
+        try {
+          const stored = JSON.parse(localStorage.getItem('contacted_leads') || '{}');
+          stored[leadId] = newStatus;
+          localStorage.setItem('contacted_leads', JSON.stringify(stored));
+        } catch (e) {}
+      }
+
+      showToast(newStatus ? '✅ Засчитано в дневной план (50)!' : 'Отметка снята');
+      renderLeads();
+      loadStats();
+    }
+
+    function copyOffer(leadId) {
+      haptic('light');
+      const text = document.getElementById(`offer-text-${leadId}`).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Оффер скопирован в буфер!');
+      }).catch(() => {
+        showToast('Ошибка копирования', '❌');
+      });
+    }
+
+    // ОСТАНОВКА ПОИСКА
+    async function stopCurrentSearch() {
+      haptic('heavy');
+      showToast('🛑 Останавливаем поиск...', '⏳');
+
+      try {
+        await fetch('/api/search/stop', { method: 'POST' });
+      } catch (e) {}
+
+      // Fallback 1: отправляем боту через Telegram WebApp SDK
+      try {
+        if (window.Telegram?.WebApp?.sendData) {
+          window.Telegram.WebApp.sendData(JSON.stringify({ action: "stop" }));
+        }
+      } catch (e) {}
+
+      // Fallback 2: переход по команде /stop в боте
+      try {
+        if (window.Telegram?.WebApp?.openTelegramLink) {
+          window.Telegram.WebApp.openTelegramLink("https://t.me/test14102805_bot?start=stop");
+        }
+      } catch (e) {}
+
+      showToast('🛑 Запрос на остановку отправлен!');
+      const statusBox = document.getElementById('maps-search-status');
+      if (statusBox) statusBox.style.display = 'none';
+
+      const btnStart = document.getElementById('btn-start-maps');
+      if (btnStart) btnStart.disabled = false;
+
+      const btnStartAvito = document.getElementById('btn-start-avito');
+      if (btnStartAvito) btnStartAvito.disabled = false;
+    }
+
+    // ЗАПУСК ПОИСКА ПО КАРТАМ
+    async function startMapsSearch() {
+      haptic('heavy');
+      const niches = Array.from(selectedNiches);
+      const customQuery = document.getElementById('maps-custom-query').value.trim();
+      const limit = parseInt(document.getElementById('maps-limit').value) || 5;
+
+      if (!niches.length && !customQuery) {
+        showToast('Выберите ниши или введите запрос', '⚠️');
+        return;
+      }
+
+      const statusBox = document.getElementById('maps-search-status');
+      const statusText = document.getElementById('maps-status-text');
+      const btn = document.getElementById('btn-start-maps');
+
+      btn.disabled = true;
+      statusBox.style.display = 'block';
+      statusText.innerText = 'Запуск поиска...';
+
+      let sent = false;
+      try {
+        const res = await fetch('/api/search/maps', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            niches: niches,
+            query: customQuery,
+            max_per_niche: limit
+          })
+        });
+        if (res.ok) sent = true;
+      } catch (err) {}
+
+      if (!sent) {
+        try {
+          if (window.Telegram?.WebApp?.sendData) {
+            window.Telegram.WebApp.sendData(JSON.stringify({
+              action: "start_maps",
+              niches: niches,
+              query: customQuery,
+              max_per_niche: limit
+            }));
+            sent = true;
+          }
+        } catch (e) {}
+      }
+
+      showToast('🚀 Поиск по картам запущен!');
+      statusText.innerText = 'Поиск выполняется! Результаты поступают в бот и во вкладку «Лиды».';
+      setTimeout(() => {
+        btn.disabled = false;
+      }, 4000);
+    }
+
+    // ЗАПУСК АВИТО
+    async function startAvitoSearch() {
+      haptic('heavy');
+      const mode = document.getElementById('avito-mode').value;
+      const category = document.getElementById('avito-category').value;
+      const btn = document.getElementById('btn-start-avito');
+
+      btn.disabled = true;
+
+      let sent = false;
+      try {
+        const res = await fetch('/api/search/avito', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mode: mode, category: category })
+        });
+        if (res.ok) sent = true;
+      } catch (err) {}
+
+      if (!sent) {
+        try {
+          if (window.Telegram?.WebApp?.sendData) {
+            window.Telegram.WebApp.sendData(JSON.stringify({
+              action: "start_avito",
+              mode: mode,
+              category: category
+            }));
+          }
+        } catch (e) {}
+      }
+
+      showToast('⚡ Автоотклики Авито запущены!');
+      setTimeout(() => { btn.disabled = false; }, 4000);
+    }
+
+    async function toggleEcoMode() {
+      haptic('light');
+      try {
+        const res = await fetch('/api/gemini/toggle_eco', { method: 'POST' });
+        const data = await res.json();
+        showToast(data.eco_mode ? 'Эко-режим включен!' : 'Эко-режим выключен!');
+        loadStats();
+      } catch (e) {
+        showToast('Ошибка переключения', '❌');
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // ИНИЦИАЛИЗАЦИЯ
+    window.addEventListener('DOMContentLoaded', () => {
+      initNichesGrid();
+      updateAvitoCategories();
+      loadStats();
+      // Периодическое обновление статистики каждые 15 сек
+      setInterval(loadStats, 15000);
+    });
+  </script>
+</body>
+</html>
