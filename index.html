@@ -1154,7 +1154,7 @@
             <div class="offer-box">
               <div style="font-weight: 600; color: #93c5fd; margin-bottom: 4px;">💡 Персональный оффер (ROI):</div>
               <div id="offer-text-${lead.id}">${escapeHtml(lead.offer_text || 'Оффер не сформирован')}</div>
-              <button class="copy-btn" onclick="copyOffer(${lead.id})">
+              <button class="copy-btn" onclick="copyOffer('${lead.id}')">
                 📋 Скопировать текст оффера
               </button>
             </div>
@@ -1163,11 +1163,11 @@
               ${lead.telegram ? `<a class="btn-action btn-tg" href="${lead.telegram}" target="_blank">💬 Telegram</a>` : ''}
               ${lead.whatsapp ? `<a class="btn-action btn-wa" href="${lead.whatsapp}" target="_blank">🟢 WhatsApp</a>` : ''}
               ${lead.vk ? `<a class="btn-action btn-vk" href="${lead.vk}" target="_blank">🔵 VK</a>` : ''}
-              ${lead.map_url ? `<a class="btn-action btn-map" href="${lead.map_url}" target="_blank">🗺 Карты</a>` : ''}
+              ${lead.map_url ? `<a class="btn-action btn-map" href="${lead.map_url}" target="_blank">${lead.type === 'avito' ? '🔗 На Авито' : '🗺 Карты'}</a>` : ''}
             </div>
 
             <div style="margin-top: 10px;">
-              <button class="btn ${isDone ? 'btn-secondary' : 'btn-success'} btn-sm" onclick="toggleLeadContacted(${lead.id}, ${!isDone})">
+              <button class="btn ${isDone ? 'btn-secondary' : 'btn-success'} btn-sm" onclick="toggleLeadContacted('${lead.id}', ${!isDone})">
                 ${isDone ? '↩️ Снять отметку' : '✉️ Отметить: «Сообщение отправлено» (+1 в план)'}
               </button>
             </div>
