@@ -480,6 +480,72 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
+    /* FOLLOW-UP & WHATSAPP BUTTONS */
+    .followup-box {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 3px solid #f59e0b;
+      border-radius: 0 8px 8px 0;
+      padding: 9px 11px;
+      margin: 8px 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #fef3c7;
+    }
+
+    .btn-wa-direct {
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .btn-wa-direct:hover { background: #15803d; }
+
+    .btn-wa-followup {
+      background: #ea580c;
+      color: #fff;
+      border: none;
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .btn-wa-followup:hover { background: #c2410c; }
+
+    .stage-select {
+      background: rgba(15, 23, 42, 0.9) !important;
+      color: #f8fafc !important;
+      border: 1px solid var(--card-border) !important;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .pipeline-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .pipeline-card {
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .pipeline-card:active {
+      transform: scale(0.97);
+    }
+
     /* BOTTOM NAV */
     .bottom-nav {
       position: fixed;
@@ -873,13 +939,45 @@
         <input type="text" id="leads-search" class="input-control" placeholder="🔍 Поиск по названию, адресу, сфере, телефону..." oninput="renderLeads()">
       </div>
 
+      <!-- Pipeline Funnel Summary -->
+      <div class="pipeline-summary">
+        <div class="pipeline-card" onclick="setLeadFilter('pending', document.getElementById('pill-pending'))" style="cursor: pointer; background: rgba(234, 179, 8, 0.08); border: 1px solid rgba(234, 179, 8, 0.25); border-radius: 8px; padding: 7px; text-align: center;">
+          <div style="font-size: 10.5px; color: #facc15;">⏳ Ожидают</div>
+          <div style="font-size: 15px; font-weight: 700; color: #fff;" id="funnel-pending">0</div>
+        </div>
+        <div class="pipeline-card" onclick="setLeadFilter('contacted', document.getElementById('pill-contacted'))" style="cursor: pointer; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; padding: 7px; text-align: center;">
+          <div style="font-size: 10.5px; color: #60a5fa;">✉️ Отправлено</div>
+          <div style="font-size: 15px; font-weight: 700; color: #fff;" id="funnel-contacted">0</div>
+        </div>
+        <div class="pipeline-card" onclick="setLeadFilter('replied', document.getElementById('pill-replied'))" style="cursor: pointer; background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 8px; padding: 7px; text-align: center;">
+          <div style="font-size: 10.5px; color: #c084fc;">💬 Диалог</div>
+          <div style="font-size: 15px; font-weight: 700; color: #fff;" id="funnel-replied">0</div>
+        </div>
+        <div class="pipeline-card" onclick="setLeadFilter('demo', document.getElementById('pill-demo'))" style="cursor: pointer; background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.25); border-radius: 8px; padding: 7px; text-align: center;">
+          <div style="font-size: 10.5px; color: #fb923c;">🎥 Демо / КП</div>
+          <div style="font-size: 15px; font-weight: 700; color: #fff;" id="funnel-demo">0</div>
+        </div>
+        <div class="pipeline-card" onclick="setLeadFilter('won', document.getElementById('pill-won'))" style="cursor: pointer; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.25); border-radius: 8px; padding: 7px; text-align: center;">
+          <div style="font-size: 10.5px; color: #4ade80;">💰 Сделка</div>
+          <div style="font-size: 15px; font-weight: 700; color: #fff;" id="funnel-won">0</div>
+        </div>
+        <div class="pipeline-card" onclick="setLeadFilter('followup', document.getElementById('pill-followup'))" style="cursor: pointer; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 8px; padding: 7px; text-align: center;">
+          <div style="font-size: 10.5px; color: #f87171;">🔥 Дожим</div>
+          <div style="font-size: 15px; font-weight: 700; color: #fff;" id="funnel-followup">0</div>
+        </div>
+      </div>
+
       <div class="filter-pills">
-        <div class="pill active" onclick="setLeadFilter('all', this)">Все (<span id="count-all">0</span>)</div>
-        <div class="pill" onclick="setLeadFilter('pending', this)">Ожидают (<span id="count-pending">0</span>)</div>
-        <div class="pill" onclick="setLeadFilter('contacted', this)">Отправлено ✅ (<span id="count-contacted">0</span>)</div>
-        <div class="pill" onclick="setLeadFilter('maps', this)">🗺 Карты (<span id="count-maps">0</span>)</div>
-        <div class="pill" onclick="setLeadFilter('avito', this)">⚡ Авито (<span id="count-avito">0</span>)</div>
-        <div class="pill" onclick="setLeadFilter('tg_wa', this)">📱 С мессенджерами</div>
+        <div class="pill active" id="pill-all" onclick="setLeadFilter('all', this)">Все (<span id="count-all">0</span>)</div>
+        <div class="pill" id="pill-pending" onclick="setLeadFilter('pending', this)">⏳ Ожидают (<span id="count-pending">0</span>)</div>
+        <div class="pill" id="pill-contacted" onclick="setLeadFilter('contacted', this)">✉️ Отправлено (<span id="count-contacted">0</span>)</div>
+        <div class="pill" id="pill-replied" onclick="setLeadFilter('replied', this)">💬 Диалог (<span id="count-replied">0</span>)</div>
+        <div class="pill" id="pill-demo" onclick="setLeadFilter('demo', this)">🎥 Демо (<span id="count-demo">0</span>)</div>
+        <div class="pill" id="pill-won" onclick="setLeadFilter('won', this)">💰 Сделка (<span id="count-won">0</span>)</div>
+        <div class="pill" id="pill-followup" onclick="setLeadFilter('followup', this)">🔥 Дожим (<span id="count-followup">0</span>)</div>
+        <div class="pill" id="pill-maps" onclick="setLeadFilter('maps', this)">🗺 Карты (<span id="count-maps">0</span>)</div>
+        <div class="pill" id="pill-avito" onclick="setLeadFilter('avito', this)">⚡ Авито (<span id="count-avito">0</span>)</div>
+        <div class="pill" id="pill-tg_wa" onclick="setLeadFilter('tg_wa', this)">📱 С мессенджерами</div>
       </div>
 
       <div id="leads-list-container">
@@ -1266,6 +1364,31 @@
       showToast('Файлы отправляются в чат Telegram!', '📂');
     }
 
+    const STAGES = {
+      pending: { label: 'Ожидает', icon: '⏳', color: '#facc15', bg: 'rgba(234, 179, 8, 0.15)' },
+      contacted: { label: 'Отправлено', icon: '✉️', color: '#60a5fa', bg: 'rgba(59, 130, 246, 0.15)' },
+      replied: { label: 'Диалог', icon: '💬', color: '#c084fc', bg: 'rgba(168, 85, 247, 0.15)' },
+      demo: { label: 'Демо / КП', icon: '🎥', color: '#fb923c', bg: 'rgba(249, 115, 22, 0.15)' },
+      won: { label: 'Сделка', icon: '💰', color: '#4ade80', bg: 'rgba(34, 197, 94, 0.15)' },
+      lost: { label: 'Отказ', icon: '❌', color: '#f87171', bg: 'rgba(239, 68, 68, 0.15)' }
+    };
+
+    function getCleanWhatsAppPhone(phone, whatsappUrl) {
+      if (whatsappUrl) {
+        const m = String(whatsappUrl).match(/wa\.me\/(\d+)/);
+        if (m) return m[1];
+      }
+      if (!phone) return null;
+      let digits = String(phone).replace(/\D/g, '');
+      if (digits.length === 11 && (digits.startsWith('8') || digits.startsWith('7'))) {
+        return '7' + digits.slice(1);
+      }
+      if (digits.length === 10) {
+        return '7' + digits;
+      }
+      return digits.length >= 10 ? digits : null;
+    }
+
     async function loadLeads() {
       try {
         let res = await fetch('/api/leads').catch(() => null);
@@ -1278,9 +1401,20 @@
 
         try {
           const stored = JSON.parse(localStorage.getItem('contacted_leads') || '{}');
+          const storedStages = JSON.parse(localStorage.getItem('lead_stages') || '{}');
+          const storedFup = JSON.parse(localStorage.getItem('lead_followups') || '{}');
           allLeads.forEach(l => {
+            if (storedStages[l.id] !== undefined) {
+              l.stage = storedStages[l.id];
+            }
             if (stored[l.id] !== undefined) {
               l.is_contacted = stored[l.id];
+            }
+            if (storedFup[l.id] !== undefined) {
+              l.followup_sent_at = storedFup[l.id];
+            }
+            if (!l.stage) {
+              l.stage = l.is_contacted ? 'contacted' : 'pending';
             }
           });
         } catch (e) {}
@@ -1296,7 +1430,7 @@
       haptic('light');
       currentFilter = filter;
       document.querySelectorAll('.filter-pills .pill').forEach(p => p.classList.remove('active'));
-      el.classList.add('active');
+      if (el) el.classList.add('active');
       renderLeads();
     }
 
@@ -1313,32 +1447,55 @@
 
         if (!matchSearch) return false;
 
-        if (currentFilter === 'pending') return !lead.is_contacted;
-        if (currentFilter === 'contacted') return lead.is_contacted;
+        const st = lead.stage || (lead.is_contacted ? 'contacted' : 'pending');
+
+        if (currentFilter === 'pending') return st === 'pending' || !lead.is_contacted;
+        if (currentFilter === 'contacted') return st === 'contacted' || (lead.is_contacted && st === 'contacted');
+        if (currentFilter === 'replied') return st === 'replied';
+        if (currentFilter === 'demo') return st === 'demo';
+        if (currentFilter === 'won') return st === 'won';
+        if (currentFilter === 'followup') {
+          return (st === 'contacted' || st === 'replied') && !lead.followup_sent_at;
+        }
         if (currentFilter === 'maps') return lead.type === 'map';
         if (currentFilter === 'avito') return lead.type === 'avito';
-        if (currentFilter === 'tg_wa') return (lead.telegram || lead.whatsapp);
+        if (currentFilter === 'tg_wa') return (lead.telegram || lead.whatsapp || lead.phone);
         return true;
       });
 
-      // Счётчики
-      const pendingCount = allLeads.filter(l => !l.is_contacted).length;
-      const contactedCount = allLeads.filter(l => l.is_contacted).length;
+      // Счётчики воронки и фильтров
+      const pendingCount = allLeads.filter(l => (l.stage === 'pending' || (!l.stage && !l.is_contacted))).length;
+      const contactedCount = allLeads.filter(l => (l.stage === 'contacted' || (!l.stage && l.is_contacted))).length;
+      const repliedCount = allLeads.filter(l => l.stage === 'replied').length;
+      const demoCount = allLeads.filter(l => l.stage === 'demo').length;
+      const wonCount = allLeads.filter(l => l.stage === 'won').length;
+      const followupCount = allLeads.filter(l => (l.stage === 'contacted' || l.stage === 'replied') && !l.followup_sent_at).length;
       const mapsCount = allLeads.filter(l => l.type === 'map').length;
       const avitoCount = allLeads.filter(l => l.type === 'avito').length;
 
       document.getElementById('count-all').innerText = allLeads.length;
       document.getElementById('count-pending').innerText = pendingCount;
       document.getElementById('count-contacted').innerText = contactedCount;
+      document.getElementById('count-replied').innerText = repliedCount;
+      document.getElementById('count-demo').innerText = demoCount;
+      document.getElementById('count-won').innerText = wonCount;
+      document.getElementById('count-followup').innerText = followupCount;
       document.getElementById('count-maps').innerText = mapsCount;
       document.getElementById('count-avito').innerText = avitoCount;
+
+      if (document.getElementById('funnel-pending')) document.getElementById('funnel-pending').innerText = pendingCount;
+      if (document.getElementById('funnel-contacted')) document.getElementById('funnel-contacted').innerText = contactedCount;
+      if (document.getElementById('funnel-replied')) document.getElementById('funnel-replied').innerText = repliedCount;
+      if (document.getElementById('funnel-demo')) document.getElementById('funnel-demo').innerText = demoCount;
+      if (document.getElementById('funnel-won')) document.getElementById('funnel-won').innerText = wonCount;
+      if (document.getElementById('funnel-followup')) document.getElementById('funnel-followup').innerText = followupCount;
 
       if (!filtered.length) {
         container.innerHTML = `
           <div style="text-align: center; padding: 35px 20px; color: var(--hint-color);">
             <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
             <div style="font-weight: 600;">Лиды не найдены</div>
-            <div style="font-size: 12px; margin-top: 4px;">Запустите поиск на вкладке «Карты» / «Авито» или сбросьте фильтры</div>
+            <div style="font-size: 12px; margin-top: 4px;">Запустите поиск на вкладке «Карты» / «Авито» или выберите другой фильтр воронки</div>
           </div>
         `;
         return;
@@ -1347,6 +1504,11 @@
       container.innerHTML = filtered.map(lead => {
         const isDone = Boolean(lead.is_contacted);
         const isMap = lead.type === 'map';
+        const currentStage = lead.stage || (isDone ? 'contacted' : 'pending');
+        const stInfo = STAGES[currentStage] || STAGES.pending;
+        const phoneClean = getCleanWhatsAppPhone(lead.phone, lead.whatsapp);
+        const followupPitch = lead.followup_pitch || '';
+        const followupSent = Boolean(lead.followup_sent_at);
 
         return `
           <div class="lead-card ${isDone ? 'contacted' : ''}" id="lead-${lead.id}">
@@ -1354,8 +1516,8 @@
               <div class="lead-name">${escapeHtml(lead.name || 'Компания')}</div>
               <div class="lead-badges">
                 <span class="lead-badge badge-type">${isMap ? '🗺 Карты' : '⚡ Авито'}</span>
-                <span class="lead-badge ${isDone ? 'badge-done' : 'badge-pending'}">
-                  ${isDone ? '✅ Отправлено' : '⏳ Ожидает'}
+                <span class="lead-badge" style="background: ${stInfo.bg}; color: ${stInfo.color}; border: 1px solid ${stInfo.color}50;">
+                  ${stInfo.icon} ${stInfo.label}
                 </span>
               </div>
             </div>
@@ -1365,27 +1527,74 @@
               <span>📍 ${escapeHtml(lead.address || 'Москва')}</span>
               ${lead.rating ? `<span>⭐ ${lead.rating}</span>` : ''}
               ${lead.phone ? `<span>📞 <b>${escapeHtml(lead.phone)}</b></span>` : ''}
+              ${lead.contacted_at ? `<span style="color: #60a5fa;">✉️ Перв. контакт: ${lead.contacted_at.slice(5, 16)}</span>` : ''}
+              ${lead.followup_sent_at ? `<span style="color: #f59e0b;">🔥 Дожим: ${lead.followup_sent_at.slice(5, 16)}</span>` : ''}
             </div>
 
+            <!-- Первичный оффер ROI -->
             <div class="offer-box">
-              <div style="font-weight: 600; color: #93c5fd; margin-bottom: 4px;">💡 Выгода для бизнеса (Оффер ROI):</div>
+              <div style="font-weight: 600; color: #93c5fd; margin-bottom: 4px;">💡 Первичный оффер (Экономия vs 100k зарплаты):</div>
               <div id="offer-text-${lead.id}">${escapeHtml(lead.offer_text || 'Оффер не сформирован')}</div>
-              <button class="copy-btn" onclick="copyOffer('${lead.id}')">
-                📋 Скопировать текст оффера
-              </button>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+                <button class="copy-btn" onclick="copyOffer('${lead.id}')">
+                  📋 Скопировать оффер
+                </button>
+                ${phoneClean ? `
+                  <button class="btn-wa-direct" onclick="sendWhatsAppMessage('${lead.id}', 'offer')">
+                    🟢 Открыть WhatsApp с оффером (+1 в план)
+                  </button>
+                ` : ''}
+              </div>
             </div>
 
+            <!-- Follow-up Дожим (повторный контакт) -->
+            ${followupPitch ? `
+              <div class="followup-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-weight: 600; color: #fbbf24;">🔥 Follow-up дожим (через 24 часа):</span>
+                  <span style="font-size: 10px; color: ${followupSent ? '#34d399' : '#f59e0b'};">
+                    ${followupSent ? '✅ Дожим отправлен' : '⏳ Ожидает отправки'}
+                  </span>
+                </div>
+                <div id="fup-text-${lead.id}">${escapeHtml(followupPitch)}</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;">
+                  <button class="copy-btn" onclick="copyFollowup('${lead.id}')">
+                    📋 Скопировать дожим
+                  </button>
+                  ${phoneClean ? `
+                    <button class="btn-wa-followup" onclick="sendWhatsAppMessage('${lead.id}', 'followup')">
+                      🔥 Отправить Follow-up в WhatsApp
+                    </button>
+                  ` : ''}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Прямые каналы связи -->
             <div class="lead-actions">
               ${lead.telegram ? `<a class="btn-action btn-tg" href="${lead.telegram}" target="_blank">💬 Telegram</a>` : ''}
-              ${lead.whatsapp ? `<a class="btn-action btn-wa" href="${lead.whatsapp}" target="_blank">🟢 WhatsApp</a>` : ''}
+              ${phoneClean ? `<a class="btn-action btn-wa" href="https://wa.me/${phoneClean}" target="_blank">🟢 WhatsApp</a>` : ''}
               ${lead.vk ? `<a class="btn-action btn-vk" href="${lead.vk}" target="_blank">🔵 VK</a>` : ''}
               ${lead.phone ? `<a class="btn-action btn-phone" href="tel:${escapeHtml(lead.phone.replace(/[^0-9+]/g, ''))}">📞 Позвонить</a>` : ''}
               ${lead.map_url ? `<a class="btn-action btn-map" href="${lead.map_url}" target="_blank">${isMap ? '🗺 На Картах' : '🔗 На Авито'}</a>` : ''}
             </div>
 
-            <div style="margin-top: 10px;">
-              <button class="btn ${isDone ? 'btn-secondary' : 'btn-success'} btn-sm" onclick="toggleLeadContacted('${lead.id}', ${!isDone})">
-                ${isDone ? '↩️ Снять отметку' : '✉️ Отметить: «Сообщение отправлено» (+1 в план 50)'}
+            <!-- Управление воронкой и статусом -->
+            <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 6px; flex: 1; min-width: 180px;">
+                <span style="font-size: 11px; color: var(--hint-color); white-space: nowrap;">Этап:</span>
+                <select class="input-control stage-select" style="font-size: 11px; padding: 4px 6px; height: 28px; border-radius: 6px; flex: 1;" onchange="changeLeadStage('${lead.id}', this.value)">
+                  <option value="pending" ${currentStage === 'pending' ? 'selected' : ''}>⏳ Ожидает контакта</option>
+                  <option value="contacted" ${currentStage === 'contacted' ? 'selected' : ''}>✉️ Отправлено (первый контакт)</option>
+                  <option value="replied" ${currentStage === 'replied' ? 'selected' : ''}>💬 Ответил / Диалог</option>
+                  <option value="demo" ${currentStage === 'demo' ? 'selected' : ''}>🎥 Демонстрация / КП</option>
+                  <option value="won" ${currentStage === 'won' ? 'selected' : ''}>💰 Сделка / Оплачено</option>
+                  <option value="lost" ${currentStage === 'lost' ? 'selected' : ''}>❌ Отказ</option>
+                </select>
+              </div>
+
+              <button class="btn ${isDone ? 'btn-secondary' : 'btn-success'} btn-sm" style="font-size: 11px; padding: 5px 10px;" onclick="toggleLeadContacted('${lead.id}', ${!isDone})">
+                ${isDone ? '↩️ Снять отметку' : '✅ Отметить отправленным (+1)'}
               </button>
             </div>
           </div>
@@ -1393,15 +1602,145 @@
       }).join('');
     }
 
+    function sendWhatsAppMessage(leadId, type) {
+      haptic('medium');
+      const lead = allLeads.find(l => String(l.id) === String(leadId));
+      if (!lead) return;
+
+      const phone = getCleanWhatsAppPhone(lead.phone, lead.whatsapp);
+      if (!phone) {
+        showToast('Телефон не указан для WhatsApp', '⚠️');
+        return;
+      }
+
+      const text = (type === 'followup' && lead.followup_pitch) ? lead.followup_pitch : (lead.offer_text || '');
+      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+
+      if (window.Telegram?.WebApp?.openLink) {
+        window.Telegram.WebApp.openLink(waUrl);
+      } else {
+        window.open(waUrl, '_blank');
+      }
+
+      if (type === 'followup') {
+        markFollowupSent(leadId);
+        showToast('🔥 Follow-up дожим открыт в WhatsApp!', '🟢');
+      } else {
+        if (!lead.is_contacted) {
+          toggleLeadContacted(leadId, true);
+          showToast('🟢 WhatsApp открыт! +1 засчитано в дневной план (50)', '✅');
+        } else {
+          showToast('🟢 WhatsApp открыт с оффером!', '💬');
+        }
+      }
+    }
+
+    async function markFollowupSent(leadId) {
+      haptic('light');
+      const lead = allLeads.find(l => String(l.id) === String(leadId));
+      const nowStr = new Date().toISOString().replace('T', ' ').slice(0, 19);
+      if (lead) {
+        lead.followup_sent_at = nowStr;
+        try {
+          const storedFup = JSON.parse(localStorage.getItem('lead_followups') || '{}');
+          storedFup[leadId] = nowStr;
+          localStorage.setItem('lead_followups', JSON.stringify(storedFup));
+        } catch (e) {}
+      }
+
+      // 1. API
+      try {
+        fetch('/api/lead/followup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: leadId })
+        }).catch(() => {});
+      } catch (e) {}
+
+      // 2. sendData
+      try {
+        if (window.Telegram?.WebApp?.sendData) {
+          window.Telegram.WebApp.sendData(JSON.stringify({ action: 'followup', id: leadId }));
+        }
+      } catch (e) {}
+
+      // 3. Deep link
+      try {
+        if (window.Telegram?.WebApp?.openTelegramLink) {
+          const cleanId = String(leadId).replace('_', '');
+          window.Telegram.WebApp.openTelegramLink(`https://t.me/test14102805_bot?start=fup_${cleanId}`);
+        }
+      } catch (e) {}
+
+      renderLeads();
+    }
+
+    async function changeLeadStage(leadId, newStage) {
+      haptic('medium');
+      const lead = allLeads.find(l => String(l.id) === String(leadId));
+      if (lead) {
+        const wasContacted = lead.is_contacted;
+        const nowContacted = ['contacted', 'replied', 'demo', 'won'].includes(newStage);
+        lead.stage = newStage;
+        lead.is_contacted = nowContacted;
+
+        try {
+          const storedStages = JSON.parse(localStorage.getItem('lead_stages') || '{}');
+          storedStages[leadId] = newStage;
+          localStorage.setItem('lead_stages', JSON.stringify(storedStages));
+
+          const stored = JSON.parse(localStorage.getItem('contacted_leads') || '{}');
+          stored[leadId] = nowContacted;
+          localStorage.setItem('contacted_leads', JSON.stringify(stored));
+        } catch (e) {}
+
+        if (!wasContacted && nowContacted) {
+          let offset = parseInt(localStorage.getItem('manual_goal_offset') || '0', 10);
+          offset += 1;
+          localStorage.setItem('manual_goal_offset', offset);
+          loadStats();
+        }
+      }
+
+      // 1. API
+      try {
+        fetch('/api/lead/set_stage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: leadId, stage: newStage })
+        }).catch(() => {});
+      } catch (e) {}
+
+      // 2. sendData
+      try {
+        if (window.Telegram?.WebApp?.sendData) {
+          window.Telegram.WebApp.sendData(JSON.stringify({ action: 'set_stage', id: leadId, stage: newStage }));
+        }
+      } catch (e) {}
+
+      // 3. Deep link
+      try {
+        if (window.Telegram?.WebApp?.openTelegramLink) {
+          const cleanId = String(leadId).replace('_', '');
+          window.Telegram.WebApp.openTelegramLink(`https://t.me/test14102805_bot?start=stage_${cleanId}_${newStage}`);
+        }
+      } catch (e) {}
+
+      const stInfo = STAGES[newStage] || STAGES.contacted;
+      showToast(`Этап воронки: ${stInfo.icon} ${stInfo.label}`);
+      renderLeads();
+    }
+
     async function toggleLeadContacted(leadId, newStatus) {
       haptic('medium');
+      const newStage = newStatus ? 'contacted' : 'pending';
 
       // 1. Отправляем на бэкенд
       try {
         fetch('/api/lead/toggle_contacted', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: leadId, is_contacted: newStatus })
+          body: JSON.stringify({ id: leadId, is_contacted: newStatus, stage: newStage })
         }).catch(() => {});
       } catch (err) {}
 
@@ -1409,10 +1748,15 @@
       const lead = allLeads.find(l => String(l.id) === String(leadId));
       if (lead) {
         lead.is_contacted = newStatus;
+        lead.stage = newStage;
         try {
           const stored = JSON.parse(localStorage.getItem('contacted_leads') || '{}');
           stored[leadId] = newStatus;
           localStorage.setItem('contacted_leads', JSON.stringify(stored));
+
+          const storedStages = JSON.parse(localStorage.getItem('lead_stages') || '{}');
+          storedStages[leadId] = newStage;
+          localStorage.setItem('lead_stages', JSON.stringify(storedStages));
         } catch (e) {}
       }
 
@@ -1428,10 +1772,26 @@
 
     function copyOffer(leadId) {
       haptic('light');
-      const text = document.getElementById(`offer-text-${leadId}`).innerText;
+      const text = document.getElementById(`offer-text-${leadId}`)?.innerText || '';
+      if (!text) return;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
           showToast('Оффер скопирован в буфер обмена!');
+        }).catch(() => {
+          fallbackCopyText(text);
+        });
+      } else {
+        fallbackCopyText(text);
+      }
+    }
+
+    function copyFollowup(leadId) {
+      haptic('light');
+      const text = document.getElementById(`fup-text-${leadId}`)?.innerText || '';
+      if (!text) return;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Follow-up скопирован в буфер обмена!');
         }).catch(() => {
           fallbackCopyText(text);
         });
